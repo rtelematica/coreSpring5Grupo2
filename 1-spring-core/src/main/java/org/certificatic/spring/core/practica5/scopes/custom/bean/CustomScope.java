@@ -15,6 +15,10 @@ public class CustomScope implements Scope {
 	private Map<String, Object> objectMap = Collections.synchronizedMap(new HashMap<String, Object>());
 
 	private int n = 0;
+	
+	public CustomScope() {
+		System.out.println("construyendo CustomScope()");
+	}
 
 	@Override
 	public Object get(String name, ObjectFactory<?> objectFactory) {
@@ -24,7 +28,6 @@ public class CustomScope implements Scope {
 
 		if (n >= 5) {
 			this.clearBeans();
-			n = 0;
 		}
 
 		if (!objectMap.containsKey(name)) {
@@ -52,11 +55,6 @@ public class CustomScope implements Scope {
 	}
 
 	@Override
-	public Object resolveContextualObject(String key) {
-		return null;
-	}
-
-	@Override
 	public String getConversationId() {
 		return "CustomScope";
 	}
@@ -67,6 +65,12 @@ public class CustomScope implements Scope {
 
 		objectMap.clear();
 		n = 0;
+	}
+
+	@Override
+	public Object resolveContextualObject(String key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

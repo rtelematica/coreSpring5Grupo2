@@ -5,20 +5,53 @@
 
 	<!-- singleton -->
 	<!-- Definir personaSingletonBean -->
+	<bean id="personaSingletonBean"
+			class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
+			scope="singleton" />
 	
 	
 	<!-- prototype -->
 	<!-- Definir personaPrototypeBean -->
+	<bean id="personaPrototypeBean"
+			class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
+			scope="prototype" />
 	
 	
 	<!-- custom scope -->
 	<!-- Definir customScopeBean -->
-	
+	<bean id="customScopeBean"
+			class="org.certificatic.spring.core.practica5.scopes.custom.bean.CustomScope" />
 
 	<!-- configurador -->
 	<!-- Definir CustomScopeConfigurer -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="customscope">
+					<ref bean="customScopeBean"/>
+				</entry>
+				<entry key="thread">
+					<!-- Definir threadScope -->
+					<bean class="org.springframework.context.support.SimpleThreadScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 
 	<!-- bean customscope -->
 	<!-- Definir personaCustomScopeBean -->
+	<bean id="personaCustomScopeBean"
+			class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
+			scope="customscope" />
+			
+	<bean id="jugadorCustomScopeBean"
+			class="org.certificatic.spring.core.practica3.jugador.JugadorFutbol"
+			scope="customscope" />
+	
+	<!-- bean thread scope -->
+	<!-- Definir personaThreadScopeBean -->
+	<bean id="personaThreadScopeBean"
+			class="org.certificatic.spring.core.practica5.scopes.bean.Persona"
+			scope="thread" />
 
 </beans>
