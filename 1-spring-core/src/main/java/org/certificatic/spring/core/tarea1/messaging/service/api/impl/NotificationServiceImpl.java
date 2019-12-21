@@ -16,9 +16,25 @@ public class NotificationServiceImpl implements INotificationService {
 	private @Getter @Setter IMessageService emailMessageService;
 
 	@Override
-	public void notifyTo(String receiver, String message,
-			NotificationType notificationType) {
+	public void notifyTo(String receiver, String message, NotificationType notificationType) {
 
-		//Implementar
+		// Implementar
+		switch (notificationType) {
+		case EMAIL:
+			emailMessageService.sendMessage(receiver, message);
+			break;
+
+		case FACEBOOK:
+			facebookMessageService.sendMessage(receiver, message);
+			break;
+
+		case TWITTER:
+			twitterMessageService.sendMessage(receiver, message);
+			break;
+
+		default:
+			assert false;
+			break;
+		}
 	}
 }

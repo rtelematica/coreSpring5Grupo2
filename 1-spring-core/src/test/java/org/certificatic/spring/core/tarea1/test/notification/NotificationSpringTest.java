@@ -16,7 +16,8 @@ public class NotificationSpringTest {
 
 	@BeforeClass
 	public static void beforeClass() {
-		applicationContext = new ClassPathXmlApplicationContext("spring/tarea1/notification-application-context.xml");
+		applicationContext = new ClassPathXmlApplicationContext(
+										"spring/tarea1/notification-application-context.xml");
 	}
 
 	@Test
@@ -24,8 +25,8 @@ public class NotificationSpringTest {
 
 		log.info("notificationSpringTest -------------------");
 
-		INotificationService notificacionService = (INotificationService) applicationContext
-				.getBean(INotificationService.class);
+		INotificationService notificacionService = applicationContext.getBean(
+																INotificationService.class);
 
 		Assert.assertNotNull(notificacionService);
 

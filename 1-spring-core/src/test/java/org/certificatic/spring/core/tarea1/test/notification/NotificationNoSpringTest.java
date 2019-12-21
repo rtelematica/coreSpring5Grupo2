@@ -32,7 +32,7 @@ public class NotificationNoSpringTest {
 		Assert.assertNotNull(notificacionService);
 
 		notificacionService.notifyTo("Ivan",
-				"Bienvenidos al Workshop de Spring 4", NotificationType.FACEBOOK);
+				"Bienvenidos al Workshop de Spring 4", NotificationType.TWITTER);
 	}
 
 }
