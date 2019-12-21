@@ -4,7 +4,27 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- define bean holaMundoBean -->
+	<bean id="hmb1" class="org.certificatic.spring.core.practica2.bean.HolaMundo">
+	</bean>
 
-	<!-- define bean holaMundoBean2 -->
+	<!-- define bean holaMundoBean2 DI por setter-->
+	<bean id="hmb2" class="org.certificatic.spring.core.practica2.bean.HolaMundo">
+		<property name="mensaje" value="Mi mensaje desde beans.xml por setter" />
+	</bean>
+	
+	<!-- define bean holaMundoBean3 DI por setter-->
+	<bean id="hmb3" class="org.certificatic.spring.core.practica2.bean.HolaMundo">
+		<constructor-arg>
+			<value>Mi mensaje desde beans.xml por constructor</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- define bean holaMundoBean4 DI por constructor y setter-->
+	<bean id="hmb4" class="org.certificatic.spring.core.practica2.bean.HolaMundo">
+		<constructor-arg>
+			<value>Mi mensaje desde beans.xml por constructor 1</value>
+		</constructor-arg>
+		<property name="mensaje" value="Mi mensaje desde beans.xml por setter 2" />
+	</bean>
 
 </beans>
