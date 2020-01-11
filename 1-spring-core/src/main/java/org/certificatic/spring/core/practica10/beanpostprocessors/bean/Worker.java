@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class Worker {
+public final class Worker implements IWorker {
 	private @Getter @Setter String name;
 	private @Getter @Setter int age;
 
@@ -14,7 +14,7 @@ public class Worker {
 		this.age = 10;
 
 		System.out.println("[Construct] Worker name: " + this.name);
-		System.out.println("[Construct] Worker name: " + this.age);
+		System.out.println("[Construct] Worker age: " + this.age);
 	}
 
 	public void init() {

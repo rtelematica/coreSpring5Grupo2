@@ -4,7 +4,41 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Define bean clase Person -->
+	<bean
+		class="org.certificatic.spring.core.practica11.innerbeans.bean.Person">
+
+		<property name="name">
+			<bean id="nameBean" class="java.lang.String">
+				<constructor-arg value="Ivan Garcia" />
+			</bean>
+		</property>
+
+		<property name="age" value="32" />
+
+		<property name="address">
+
+			<bean
+				class="org.certificatic.spring.core.practica11.innerbeans.bean.Address">
+
+				<property name="street">
+					<ref bean="streetNameBean" />
+				</property>
+				<property name="externalNumber" value="122" />
+				<property name="internalNumber" value="201" />
+				<property name="neighbor">
+					<bean class="java.lang.String">
+						<constructor-arg value="Campestre Churubusco" />
+					</bean>
+				</property>
+
+			</bean>
+
+		</property>
+	</bean>
 
 	<!-- Define bean streetNameBean -->
+	<bean id="streetNameBean" class="java.lang.String">
+		<constructor-arg value="Paseo de los Pirules" />
+	</bean>
 
 </beans>

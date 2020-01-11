@@ -1,10 +1,10 @@
 package org.certificatic.spring.core.practica10.test.beanpostprocessors;
 
-import org.certificatic.spring.core.practica10.beanpostprocessors.bean.Worker;
+import org.certificatic.spring.core.practica10.beanpostprocessors.bean.IWorker;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,18 +20,24 @@ public class BeanPostProcessorsTest {
 				"spring/practica10/bean-post-processors-application-context.xml");
 	}
 
+	@After
+	public void afterTest() {
+		applicationContext.close();
+	}
+
 	@Test
 	public void beanPostProcessorsTest() {
 
 		log.info("beanPostProcessorsTest -------------------");
 
-		Worker worker = applicationContext.getBean(Worker.class);
+		IWorker worker = applicationContext.getBean(IWorker.class);
 
 		Assert.assertNotNull(worker);
 
+		worker.showInfo();
+
 		log.info("worker: {}", worker);
 
-		((AbstractApplicationContext) applicationContext).close();
 	}
 
 }

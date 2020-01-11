@@ -40,15 +40,18 @@ public class NamespacesPCUtilTest {
 
 		log.info("circulo: {}", circulo);
 
-		Agenda agenda = applicationContext.getBean(Agenda.class);
-
-		Assert.assertNotNull(agenda);
-
-		log.info("agenda: {}", agenda);
-
+//		Agenda agenda = applicationContext.getBean(Agenda.class);
+//
+//		Assert.assertNotNull(agenda);
+//
+//		log.info("agenda: {}", agenda);
+//
 		MisProperties misProperties = applicationContext.getBean(MisProperties.class);
 
 		Assert.assertNotNull(misProperties);
+		Assert.assertEquals("Tu nombre", misProperties.getProgrammerName());
+		Assert.assertEquals("Iker Emilio", misProperties.getNombreHijo());
+		Assert.assertEquals("Spring Framework 5", misProperties.getNombreCurso());
 
 		log.info("misProperties: {}", misProperties);
 

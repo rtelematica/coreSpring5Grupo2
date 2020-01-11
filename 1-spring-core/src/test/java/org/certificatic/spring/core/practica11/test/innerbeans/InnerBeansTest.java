@@ -1,6 +1,7 @@
 package org.certificatic.spring.core.practica11.test.innerbeans;
 
 import org.certificatic.spring.core.practica11.innerbeans.bean.Person;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,11 @@ public class InnerBeansTest {
 				"spring/practica11/inner-beans-application-context.xml");
 	}
 
+	@After
+	public void afterTest() {
+		applicationContext.close();
+	}
+
 	@Test
 	public void innerBeansTest() {
 
@@ -31,8 +37,6 @@ public class InnerBeansTest {
 		Assert.assertNotNull(person);
 
 		log.info("person: {}", person);
-
-		((AbstractApplicationContext) applicationContext).close();
 	}
 
 	@Test
@@ -40,14 +44,11 @@ public class InnerBeansTest {
 
 		log.info("getStreetNameBeanTest -------------------");
 
-		String streetNameBean = applicationContext.getBean("streetNameBean",
-				String.class);
+		String streetNameBean = applicationContext.getBean("streetNameBean", String.class);
 
 		Assert.assertNotNull(streetNameBean);
 
 		log.info("streetNameBean: {}", streetNameBean);
-
-		((AbstractApplicationContext) applicationContext).close();
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
@@ -55,12 +56,12 @@ public class InnerBeansTest {
 
 		log.info("getNameBeanTest -------------------");
 
-		String nameBean = applicationContext.getBean("nameBean",
-				String.class);
+		String nameBean = null;
+
+		nameBean = applicationContext.getBean("nameBean", String.class);
 
 		Assert.fail("Should have to fail at this line");
 
-		((AbstractApplicationContext) applicationContext).close();
 	}
 
 }

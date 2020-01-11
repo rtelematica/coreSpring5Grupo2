@@ -4,9 +4,15 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
-	<!-- Configuracion por anotaciones -->
 	
 	<!-- Define bean Automovil -->
+	<bean id="auto"
+		class="org.certificatic.spring.core.practicaA.lifecycle.bean.Automovil">
+	
+		<property name="engine" value="Power Twin Turbo 2.0" />
+		
+		<property name="model" value="BMW 330ia"/>
+		
+	</bean>
 
 </beans>

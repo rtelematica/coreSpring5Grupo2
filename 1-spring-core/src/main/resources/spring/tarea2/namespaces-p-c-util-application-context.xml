@@ -5,16 +5,42 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-	<!-- Define bean Agenda -->
+	<!-- Define bean Agenda
+	<bean
+		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Agenda">
+	</bean>  -->
 
 	<bean
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Persona"
-		p:nombre="Ivan García" p:auto-ref="autoBean" />
+		p:nombre="Ivan Garcia" p:auto-ref="autoBean" />
 
 	<bean id="autoBean"
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Auto"
-		c:marca="Seat" c:modelo-ref="modeloStringBean" />
+		c:marca="BMW" c:modelo-ref="modeloStringBean" />
 
 	<!-- Define Beans al gusto usando p, c y util -->
-
+	<bean id="modeloStringBean" 
+		class="java.lang.String">
+		<constructor-arg value="330ia" />
+	</bean>
+	
+	<bean class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Circulo">
+		<property name="pi">
+			<util:constant static-field="java.lang.Math.PI"/>
+		</property>
+		<property name="radio" value="3" />
+	</bean>
+	
+	<bean 
+		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.MisProperties">
+		<property name="nombreCurso" value="??????" />
+		<property name="nombreHijo" value="??????" />
+		<property name="programmerName" value="??????" />
+	</bean>
+	
+	<util:properties id="misPropertiesBean" 
+		location="classpath:/spring/tarea2/properties/*.properties">
+		<prop key="programmer.name">Tu nombre</prop>
+	</util:properties>
+	
 </beans>

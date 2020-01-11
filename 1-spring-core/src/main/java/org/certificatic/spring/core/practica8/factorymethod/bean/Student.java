@@ -8,6 +8,7 @@ public class Student {
 	private Subject subject;
 
 	private Student() {
+		System.out.println("new Student()");
 	}
 
 	public static Student constructStudent(String name, String materia) {
