@@ -7,8 +7,12 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- Habilita configuración por anotaciones -->
+	<context:annotation-config />
 
 	<!-- Define bean Journalist -->
+	<bean 
+		class="org.certificatic.spring.core.practica15.autowired.setter.bean.Journalist">
+	</bean>
 
 	<!-- Define bean NoteBook -->
 	<bean

@@ -5,10 +5,21 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- Habilita configuración por anotaciones -->
+	<context:annotation-config />
 
 	<!-- Define bean Cameraman (okCameraman) -->
+	<bean id="okCameraman"
+		class="org.certificatic.spring.core.practica15.required.bean.Cameraman" 
+		scope="prototype">
+		<property name="name" ref="name" />
+		<property name="dni" ref="dni" />
+	</bean>
 
 	<!-- Define bean Cameraman (badCameraman) -->
+	<bean id="badCameraman"
+		class="org.certificatic.spring.core.practica15.required.bean.Cameraman" 
+		scope="prototype">
+	</bean>
 	
 	<bean id="name" class="java.lang.String">
 		<constructor-arg>

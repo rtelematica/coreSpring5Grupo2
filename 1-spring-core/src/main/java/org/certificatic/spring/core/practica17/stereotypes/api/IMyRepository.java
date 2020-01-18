@@ -1,5 +1,5 @@
 package org.certificatic.spring.core.practica17.stereotypes.api;
 
-public interface IServiceClass {
+public interface IMyRepository {
 	public String getName();
 }

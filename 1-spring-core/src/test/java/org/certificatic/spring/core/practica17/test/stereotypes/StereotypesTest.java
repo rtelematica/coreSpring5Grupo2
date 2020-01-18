@@ -1,6 +1,6 @@
 package org.certificatic.spring.core.practica17.test.stereotypes;
 
-import org.certificatic.spring.core.practica17.stereotypes.api.IRestControllerClass;
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyRestController;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class StereotypesTest {
 
 		log.info("restControllerTest -------------------");
 
-		IRestControllerClass restController = applicationContext.getBean(IRestControllerClass.class);
+		IMyRestController restController = applicationContext.getBean(IMyRestController.class);
 
 		String name = "My REST Controller Implementation";
 

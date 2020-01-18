@@ -1,36 +1,51 @@
 package org.certificatic.spring.core.practica17.test.stereotypes;
 
-import org.certificatic.spring.core.practica17.stereotypes.api.IComponentClass;
-import org.certificatic.spring.core.practica17.stereotypes.api.IControllerClass;
-import org.certificatic.spring.core.practica17.stereotypes.api.IRepositoryClass;
-import org.certificatic.spring.core.practica17.stereotypes.api.IRestControllerClass;
-import org.certificatic.spring.core.practica17.stereotypes.api.IServiceClass;
+import javax.annotation.Resource;
+
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyComponent;
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyController;
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyRepository;
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyRestController;
+import org.certificatic.spring.core.practica17.stereotypes.api.IMyService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 // Implementar run with spring-test
+@RunWith(SpringRunner.class)
 // cargar context configuration
+@ContextConfiguration(locations = {
+		"classpath:/spring/practica17/component-scan-stereotypes-application-context.xml"})
 public class StereotypesBetterTest {
 
 	// Inyectar todas las dependencias
+	@Autowired
+	private IMyRestController restController;
 
-	private IRestControllerClass restController;
+	@Resource
+	private IMyRestController restController2;
 
-	private IRestControllerClass restController2;
+	@Autowired
+	private IMyService service;
 
-	private IServiceClass service;
+	@Autowired
+	private IMyService service2;
 
-	private IServiceClass service2;
+	@Autowired
+	private IMyController controller;
 
-	private IControllerClass controller;
+	@Resource
+	private IMyComponent component;
 
-	private IComponentClass component;
-
-	private IRepositoryClass repository;
+	@Resource
+	private IMyRepository repository;
 
 	@Before
 	public void beforeClass() {

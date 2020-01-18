@@ -1,8 +1,16 @@
 package org.certificatic.spring.core.practica18.jsr330.bean.employees.teamx;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.certificatic.spring.core.practica18.jsr330.bean.Employee;
+import org.certificatic.spring.core.practica18.jsr330.qualifiers.EmployeeQualifier;
+import org.certificatic.spring.core.practica18.jsr330.qualifiers.EmployeeQualifier.EmployeeType;
 
 // Anotar como bean (singleton)
+@Named
+@Singleton
+@EmployeeQualifier(employeeType = EmployeeType.PROGRAMMER)
 public class EmployeeProgrammer extends Employee {
 
 	public EmployeeProgrammer() {

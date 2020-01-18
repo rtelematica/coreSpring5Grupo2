@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- habilitar component scan -->
+	<context:component-scan base-package="org.certificatic.spring.core.practica18" />
 
 	<bean id="itDirector"
 		class="org.certificatic.spring.core.practica18.jsr330.bean.api.impl.Director">
@@ -34,5 +35,15 @@
 		<value>Jacobo</value>
 		<value>Uriel</value>
 	</util:list>
+	
+	<bean id="secretaryTrainee"
+		class="org.certificatic.spring.core.practica18.jsr330.bean.Secretary">
+		<property name="employee">
+			<bean class="org.certificatic.spring.core.practica18.jsr330.bean.Employee">
+				<property name="dni" value="123-abc-urra" />
+				<property name="name" value="Paula Sofia" />
+			</bean>
+		</property>	
+	</bean>
 
 </beans>

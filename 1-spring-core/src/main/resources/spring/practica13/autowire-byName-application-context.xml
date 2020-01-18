@@ -6,13 +6,35 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- Define bean clase Car -->
+	<bean class="org.certificatic.spring.core.practica13.autowire.bean.Car"
+			autowire="byName">
+	</bean>
 
 	<!-- Define bean engine -->
+	<bean id="engine" 
+			class="org.certificatic.spring.core.practica13.autowire.bean.Engine"
+			p:model="v8 Twin Turbo" 
+			p:cylinderNumber="8"
+			p:serialNumber="ABC-123-DEF"/>
 
 	<!-- Define bean wheelGroup -->
+	<bean id="wheelGroup"
+			class="org.certificatic.spring.core.practica13.autowire.bean.WheelGroup"
+			autowire="byName" />
 
 	<!-- Define lista wheelList -->
+	<util:list id="wheelList" list-class="java.util.ArrayList">
+		<ref bean="rueda"/>
+		<ref bean="rueda"/>
+		<ref bean="rueda"/>
+		<ref bean="rueda"/>
+	</util:list>
 
 	<!-- Define bean wheel -->
+	<bean id="rueda" 
+			class="org.certificatic.spring.core.practica13.autowire.bean.Wheel"
+			p:material="Caucho doble con spandex y PET" 
+			p:speedIndicator="250 75 Y"
+			p:rinSize="18" scope="prototype" />
 
 </beans>

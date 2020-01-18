@@ -1,8 +1,11 @@
 package org.certificatic.spring.core.practica18.jsr330.bean.employees;
 
+import javax.inject.Named;
+
 import org.certificatic.spring.core.practica18.jsr330.bean.Employee;
 
 // Anotar como bean
+@Named("generalDirectorEmployee")
 public class EmployeeGeneralDirector extends Employee {
 
 	public EmployeeGeneralDirector() {

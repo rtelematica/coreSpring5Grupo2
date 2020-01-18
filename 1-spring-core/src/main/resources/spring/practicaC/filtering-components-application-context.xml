@@ -7,7 +7,16 @@
 
 
 	<!-- Component Scan  -->
-	<!-- exculir anotaciones @Repository
-		 excuilr tipo asignables a la clase Biker -->
+	<context:component-scan base-package="org.certificatic.spring.core.practicaC">
+	
+		<!-- exculir anotaciones @Repository
+		 	 excuilr tipo asignables a la clase Biker -->
+		 	<context:exclude-filter type="annotation" 
+		 				expression="org.springframework.stereotype.Repository"/>
+		 	<context:exclude-filter type="assignable" 
+						expression="org.certificatic.spring.core.practicaC.filteringcomponents.bean.Biker"/>
+		 	 
+	</context:component-scan>
+	
 	
 </beans>

@@ -6,32 +6,44 @@ import org.certificatic.spring.core.practicaC.filteringcomponents.bean.Biker;
 import org.certificatic.spring.core.practicaC.filteringcomponents.bean.Car;
 import org.certificatic.spring.core.practicaC.filteringcomponents.bean.repository.BikeRepository;
 import org.certificatic.spring.core.practicaC.filteringcomponents.bean.repository.CarRepository;
+import org.certificatic.spring.core.practicaC.filteringcomponents.config.FilteringComponentsConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = FilteringComponents2Test.location)
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { FilteringComponentsConfig.class })
 public class FilteringComponents2Test {
 
-	public static final String location = "classpath:/spring/practicaC/filtering-components-application-context.xml";
-
+	@Autowired
 	private Bike bike;
 
+	@Autowired
 	private Car car;
 
+	@Autowired
+	@Nullable
 	private Biker biker;
 
+	@Autowired
+	@Nullable
 	private BabyBiker babyBiker;
 
+	@Autowired
+	@Nullable
 	private BikeRepository bikeRepository;
 
+	@Autowired
+	@Nullable
 	private CarRepository carRepository;
 
 	@Before
