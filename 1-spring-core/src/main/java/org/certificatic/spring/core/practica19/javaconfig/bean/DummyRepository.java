@@ -9,7 +9,7 @@ public class DummyRepository {
 	}
 
 	public String getData() {
-		System.out.println("repository: connectiong to: " + connectionString);
+		System.out.println("repository: connecting to: " + connectionString);
 		return "my data";
 	}
 

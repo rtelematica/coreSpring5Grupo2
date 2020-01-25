@@ -41,7 +41,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("propertiesSpelTest -------------------");
 
-		String teslaName = null; // definir y obtener el valor de la expresion "name" en el contexto teslaContext
+		// definir y obtener el valor de la expresion "name" en el contexto teslaContext
+		String teslaName = spelParser.parseExpression("name")
+									 .getValue(teslaContext, String.class); 
 		
 		Assert.assertEquals("Nikola Tesla", teslaName);
 		
@@ -49,7 +51,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		// -------------------------------------
 		
-		int teslaBirthYear = 0; // definir y obtener el valor de la expresion "birthdate.year + 1900" en el contexto teslaContext
+		// definir y obtener el valor de la expresion "birthdate.year + 1900" en el contexto teslaContext
+		int teslaBirthYear = spelParser.parseExpression("birthdate.year + 1900")
+				 				.getValue(teslaContext, int.class); 
 		
 		Assert.assertEquals(1856, teslaBirthYear);
 		
@@ -57,7 +61,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String teslaNationality = null; // definir y obtener el valor de la expresion "nationality" en el contexto teslaContext
+		// definir y obtener el valor de la expresion "nationality" en el contexto teslaContext
+		String teslaNationality = spelParser.parseExpression("nationality")
+ 								.getValue(teslaContext, String.class);
 		
 		Assert.assertEquals("Serbian", teslaNationality);
 		
@@ -65,7 +71,8 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 		
-		PlaceOfBirth teslaPlaceOfBirth = null; // ???
+		PlaceOfBirth teslaPlaceOfBirth = spelParser.parseExpression("placeOfBirth")
+											.getValue(teslaContext, PlaceOfBirth.class); // ???
 		
 		Assert.assertNotNull(teslaPlaceOfBirth);
 		
@@ -80,7 +87,10 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("arraysSpelTest -------------------");
 
-		String invention_2 = null; // definir expresión que corresponda con obtener el valor del invento posición 2 de Tesla
+		// definir expresion que corresponda con obtener el valor del 
+		// invento posicion 2 de Tesla
+		String invention_2 = spelParser.parseExpression("inventions[2]")
+											.getValue(teslaContext, String.class); 
 		
 		Assert.assertEquals("the transmission of electrical power", invention_2);
 		
@@ -92,8 +102,11 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 	public void listSpelTest() {
 
 		log.info("listSpelTest -------------------");
-
-		Inventor teslaInventor = null; // definir expresión que corresponda con obtener el valor del miembro posición 2 del contexto society
+		
+		// definir expresion que corresponda con obtener el valor del miembro 
+		// posicion 2 del contexto society
+		Inventor teslaInventor = spelParser.parseExpression("members[2]")
+											.getValue(societyContext, Inventor.class); 
 		
 		Assert.assertNotNull(teslaInventor);
 		
@@ -103,7 +116,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String teslaName = null; // utilizando el contexto society, obtener el nombre de Tesla
+		// utilizando el contexto society, obtener el nombre de Tesla
+		String teslaName = spelParser.parseExpression("members[2].Name")
+									.getValue(societyContext, String.class); 
 		
 		Assert.assertNotNull(teslaName);
 		
@@ -113,7 +128,11 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String inventionName_1 = null; // utilizando el contexto society, obtener el nombre del invento posición 1 del miembro posición 2, obtener utilizando el nombre de la función
+		// utilizando el contexto society, obtener el nombre del invento 
+		// posicion 1 del miembro posicion 2. 
+		// Obtener utilizando el nombre de la funcion
+		String inventionName_1 = spelParser.parseExpression("members[2].getInventions()[1]")
+										.getValue(societyContext, String.class); 
 		
 		Assert.assertNotNull(inventionName_1);
 		
@@ -123,7 +142,11 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String otherInventionName_1 = null; // utilizando el contexto society, obtener el nombre del invento posición 1 del miembro posición 2, obener utilizando posición en el arreglo
+		// utilizando el contexto society, obtener el nombre del 
+		// invento posicion 1 del miembro posicion 2. 
+		// Obener utilizando posicion en el arreglo
+		String otherInventionName_1 = spelParser.parseExpression("members[2].inventions[1]")
+										.getValue(societyContext, String.class);
 				
 		Assert.assertNotNull(otherInventionName_1);
 		
@@ -142,7 +165,10 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("inlineListSpelTest -------------------");
 
-		List<Integer> listOfIntegers = null; // definir y obtener el valor de una expresión que corresponda a la definición de una lista de enteros del 1 al 4
+		// definir y obtener el valor de una expresion que corresponda
+		// a la definicion de una lista de enteros del 1 al 4
+		List<Integer> listOfIntegers = spelParser.parseExpression("{1,2,3,4}")
+											.getValue(List.class); 
 		
 		Assert.assertNotNull(listOfIntegers);
 
@@ -156,9 +182,22 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		List<List<String>> listOfListOfStrings = null; // definir y obtener el valor de una expresión que corresponda a la definición de una lista de listas de strings
+		// definir y obtener el valor de una expresion que corresponda 
+		// a la definicion de una lista de listas de strings
+		List<List<String>> listOfListOfStrings = spelParser.parseExpression("{{'1','2'}, {'3','4'}}")
+													.getValue(List.class); 
 		
 		Assert.assertNotNull(listOfListOfStrings);
+
+		sum = listOfListOfStrings.stream()
+						.flatMap(ls -> ls.stream())
+						.mapToInt(s -> Integer.valueOf(s))
+						.reduce(0, (i, j) -> i + j);
+						
+		
+		sumExpected = 10;
+
+		Assert.assertEquals(sumExpected, sum);
 
 		log.info("listOfListOfStrings: {}", listOfListOfStrings);
 	}
@@ -168,7 +207,10 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("mapSpelTest -------------------");
 
-		Inventor president = null; // definir y obtener el inventor 'presidente' del mapa 'oficiales' del contexto society
+		// definir y obtener el inventor 'president' del mapa 
+		// 'officers' del contexto society
+		Inventor president = spelParser.parseExpression("officers['president']")
+									.getValue(societyContext, Inventor.class); 
 		
 		Assert.assertEquals("Mihajlo Idvorski Pupin", president.getName());
 		
@@ -176,7 +218,10 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String presidentBornCity = null; // definir y obtener el nombre de la ciudad de nacimiento del inventor 'presidente' del mapa 'oficiales' del contexto society
+		// definir y obtener el nombre de la ciudad de nacimiento 
+		// del inventor 'president' del mapa 'officers' del contexto society
+		String presidentBornCity = spelParser.parseExpression("officers['president'].placeOfBirth.city")
+										.getValue(societyContext, String.class); 
 		
 		Assert.assertEquals("Village of Idvor", presidentBornCity);
 		
@@ -185,13 +230,29 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		// -------------------------------------
 
 		// setter
-		// definir y asignar el valor 'Croacia' como nueva ciudad de nacimiento el inventor 'presidente' del mapa 'oficiales' del contexto society
+		// definir y asignar el valor 'Croacia' como nueva ciudad de nacimiento 
+		// el inventor 'presidente' del mapa 'oficiales' del contexto society
+		spelParser.parseExpression("officers['president'].placeOfBirth.city")
+										.setValue(societyContext, "Croacia");
 
-		String newPresidentBornCity = null; // definir y obtener el nombre de la ciudad de nacimiento del inventor 'presidente' del mapa 'oficiales' del contexto society
+		// definir y obtener el nombre de la ciudad de nacimiento 
+		// del inventor 'presidente' del mapa 'oficiales' del contexto society
+		String newPresidentBornCity = spelParser.parseExpression("officers['president'].placeOfBirth.city")
+										.getValue(societyContext, String.class); 
 		
 		Assert.assertEquals("Croacia", newPresidentBornCity);
 		
 		log.info("newPresidentBornCity: {}", newPresidentBornCity);
+		
+		spelParser.parseExpression("officers['president'].placeOfBirth")
+								.setValue(societyContext, null);
+		
+		String nullPresidentBornCity = spelParser.parseExpression("officers['president'].placeOfBirth?.city")
+											.getValue(societyContext, String.class); 
+
+		Assert.assertNull(nullPresidentBornCity);
+
+		log.info("nullPresidentBornCity: {}", nullPresidentBornCity);
 
 	}
 
@@ -201,8 +262,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("inlineMapSpelTest -------------------");
 
+		// solo analizar
 		Map<String, String> mapOfValues = (Map<String, String>) spelParser
-				.parseExpression("{name:'Nikola Tesla', bornDate: '09/07/1856'}").getValue(); // sólo analizar
+				.parseExpression("{name:'Nikola Tesla', bornDate: '09/07/1856'}").getValue(); 
 		
 		Assert.assertNotNull(mapOfValues);
 		
@@ -214,7 +276,9 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 		
 		// -------------------------------------
 
-		String nikolaName = (String) spelParser.parseExpression("['name']").getValue(mapOfValues); // sólo analizar
+		// solo analizar
+		String nikolaName = (String) spelParser.parseExpression("['name']")
+											.getValue(mapOfValues);
 		
 		Assert.assertNotNull(nikolaName);
 		
@@ -228,7 +292,8 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		log.info("arrayConstructionSpelTest -------------------");
 
-		int[] emptyIntArray = (int[]) spelParser.parseExpression("new int[4]").getValue(); // sólo analizar
+		// solo analizar
+		int[] emptyIntArray = (int[]) spelParser.parseExpression("new int[4]").getValue();
 		
 		Assert.assertNotNull(emptyIntArray);
 		
@@ -238,7 +303,8 @@ public class PropertiesArraysListsMapsAndIndexersExpressionsTest_3 {
 
 		// -------------------------------------
 
-		int[] intArray = (int[]) spelParser.parseExpression("new int[]{1,2,3,4,5}").getValue(); // sólo analizar
+		// solo analizar
+		int[] intArray = (int[]) spelParser.parseExpression("new int[]{1,2,3,4,5}").getValue();
 		
 		Assert.assertNotNull(intArray);
 		

@@ -21,7 +21,7 @@ public class Society {
 	public static String President = "president";
 
 	private List<Inventor> members = new ArrayList<Inventor>();
-	private Map<String, Object> officers = new HashMap<String, Object>();
+	private Map<String, Object> officers = new HashMap<>();
 
 	public boolean isMember(String name) {
 		Inventor inventor = this.getMember(name);

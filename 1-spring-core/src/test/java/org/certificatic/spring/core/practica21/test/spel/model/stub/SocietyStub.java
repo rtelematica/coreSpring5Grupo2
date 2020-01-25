@@ -13,7 +13,11 @@ import org.certificatic.spring.core.practica21.spel.model.Society;
 public class SocietyStub {
 
 	public static Society createSociety(String name) {
-		return Society.builder().name(name).members(createInventors()).officers(createOfficers()).build();
+		return Society.builder()
+				.name(name)
+				.members(createInventors())
+				.officers(createOfficers())
+				.build();
 	}
 
 	public static Map<String, Object> createOfficers() {

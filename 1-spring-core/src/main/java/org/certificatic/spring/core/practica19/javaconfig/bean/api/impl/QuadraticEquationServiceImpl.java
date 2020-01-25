@@ -3,6 +3,7 @@ package org.certificatic.spring.core.practica19.javaconfig.bean.api.impl;
 import java.text.DecimalFormat;
 
 import org.apache.commons.math3.complex.Complex;
+import org.certificatic.spring.core.practica19.javaconfig.bean.QuadraticEquation;
 import org.certificatic.spring.core.practica19.javaconfig.bean.api.IQuadraticEquationService;
 import org.certificatic.spring.core.practica19.javaconfig.bean.api.QuadraticEquationResult;
 

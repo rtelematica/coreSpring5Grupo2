@@ -1,11 +1,8 @@
 package org.certificatic.spring.core.practica21.test.spel;
 
-import org.certificatic.spring.core.practica21.spel.configuration.ApplicationConfig;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -18,16 +15,11 @@ public class TemplatingExpressionsTest_9 {
 
 	private static ExpressionParser spelParser = new SpelExpressionParser();
 
-	private static StandardEvaluationContext springContext;
-
-	private static ApplicationContext applicationContext;
+	private static StandardEvaluationContext context;
 
 	@BeforeClass
 	public static void setUp() {
-		applicationContext = new AnnotationConfigApplicationContext(ApplicationConfig.class);
-
-		springContext = new StandardEvaluationContext();
-		//springContext.setBeanResolver(applicationContext.getBean(MyBeanResolver.class));
+		context = new StandardEvaluationContext();
 	}
 
 	@Test
@@ -35,15 +27,15 @@ public class TemplatingExpressionsTest_9 {
 
 		log.info("templatingExpressionsTest -------------------");
 
-		springContext.setVariable("name", "Ivan Garc�a");
+		context.setVariable("name", "Ivan Garcia");
 
 		String greeting = spelParser
 				.parseExpression("Hi #{ #name +' '+'you''re' } awesome!", new TemplateParserContext())
-				.getValue(springContext, String.class); // s�lo analiza
+				.getValue(context, String.class); // solo analiza
 
 		Assert.assertNotNull(greeting);
 
-		Assert.assertEquals("Hi Ivan Garc�a you're awesome!", greeting);
+		Assert.assertEquals("Hi Ivan Garcia you're awesome!", greeting);
 
 		log.info("greeting: {}", greeting);
 	}
@@ -53,15 +45,15 @@ public class TemplatingExpressionsTest_9 {
 
 		log.info("templatingExpressionsTest2 -------------------");
 
-		springContext.setVariable("name", "Ivan Garc�a");
+		context.setVariable("name", "Ivan Garcia");
 
 		String greeting = spelParser
 				.parseExpression("Hi %[[ #name +' '+'you''re' ]] awesome!", new TemplateParserContext("%[[", "]]"))
-				.getValue(springContext, String.class); // s�lo analiza
+				.getValue(context, String.class); // solo analiza
 
 		Assert.assertNotNull(greeting);
 
-		Assert.assertEquals("Hi Ivan Garc�a you're awesome!", greeting);
+		Assert.assertEquals("Hi Ivan Garcia you're awesome!", greeting);
 
 		log.info("greeting: {}", greeting);
 	}
