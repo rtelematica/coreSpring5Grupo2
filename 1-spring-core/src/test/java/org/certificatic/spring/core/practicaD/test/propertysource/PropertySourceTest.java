@@ -19,13 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 public class PropertySourceTest {
 
 	// Inyecta
+	@Autowired
 	private Environment env;
 
 	// Inyecta propiedad my.app-name
+	@Value("${my.app-name}")
 	private String myAppName;
 
 	// Inyecta propiedad my.app2-name
+	@Value("${my.app2-name}")
 	private String myApp2Name;
+	
+	// Inyecta propiedad perro.name
+	@Value("${perro.name:Fido}")
+	private String perroName;
 
 	@Before
 	public void setUp() {
@@ -50,6 +57,8 @@ public class PropertySourceTest {
 		
 		Assert.assertEquals("Wonderful Application 2", myApp2Name);
 		Assert.assertEquals(myApp2Name, env.getProperty("my.app2-name"));
+		
+		Assert.assertEquals("Fido", perroName);
 
 		log.info("-------");
 	}
