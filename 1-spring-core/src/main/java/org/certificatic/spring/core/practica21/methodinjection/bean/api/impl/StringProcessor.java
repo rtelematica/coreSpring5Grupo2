@@ -2,12 +2,20 @@ package org.certificatic.spring.core.practica21.methodinjection.bean.api.impl;
 
 import org.certificatic.spring.core.practica21.methodinjection.bean.api.IProcessor;
 import org.certificatic.spring.core.utils.StringUtils;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 // Define bean stringProcessor prototype
+@Component("stringProcessor")
+@Scope("prototype")
 public class StringProcessor implements IProcessor {
+
+	public StringProcessor() {
+		System.out.println("new StringProcessor()");
+	}
 
 	@Override
 	public String processData(String data, Integer iterations) {
