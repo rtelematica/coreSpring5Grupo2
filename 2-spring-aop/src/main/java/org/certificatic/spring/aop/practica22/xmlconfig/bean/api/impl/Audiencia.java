@@ -4,14 +4,18 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.certificatic.spring.aop.practica22.xmlconfig.bean.api.IAudiencia;
 import org.certificatic.spring.aop.util.Color;
 import org.certificatic.spring.aop.util.bean.api.IColorWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 // Define Bean Audiencia
+@Component("audienciaBean")
 public class Audiencia implements IAudiencia {
 
 	// Inyecta IColorWriter
+	@Autowired
 	private IColorWriter colorWriter;
 
 	@Override

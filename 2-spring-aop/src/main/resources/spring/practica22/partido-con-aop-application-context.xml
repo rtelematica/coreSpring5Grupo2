@@ -10,5 +10,18 @@
 		base-package="org.certificatic.spring.aop.practica22,org.certificatic.spring.aop.util.bean" />
 
 	<!-- TODO 6. Define configuración spring aop -->
+	<aop:config>
+	
+		<aop:aspect id="audienciaAspect" ref="audienciaBean">
+		
+			<aop:pointcut id="cuandoUnJugadorEjecutaUnPase" 
+				 expression="execution( public void org.certificatic.spring.aop.practica22.xmlconfig.bean.api.IJugador.ejecutarPase() )" />
+			
+			<aop:before pointcut-ref="cuandoUnJugadorEjecutaUnPase" method="gritaOle"/>
+			<aop:after pointcut-ref="cuandoUnJugadorEjecutaUnPase" method="gritaOle"/>
+		
+		</aop:aspect>
+	
+	</aop:config>
 
 </beans>

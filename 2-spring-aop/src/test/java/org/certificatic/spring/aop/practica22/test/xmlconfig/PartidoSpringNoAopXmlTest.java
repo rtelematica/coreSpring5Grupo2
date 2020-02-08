@@ -47,35 +47,43 @@ public class PartidoSpringNoAopXmlTest {
 
 		log.info("------------");
 
-		audiencia.sePoneDePie();
+		
 		try {
+			audiencia.sePoneDePie();
+			
 			jugador.cobrarPenal(true);
 
 			audiencia.gritaGol();
 
 		} catch (Throwable e) {
-			log.info("excepción: " + e.getMessage());
+			log.info("excepcion: " + e.getMessage());
 
 			audiencia.abuchear();
 			audiencia.abuchear();
+			
+		} finally {
+			audiencia.seSienta();
 		}
-		audiencia.seSienta();
+		
 
 		log.info("------------");
 
-		audiencia.sePoneDePie();
 		try {
+			audiencia.sePoneDePie();
+			
 			jugador.cobrarPenal(false);
 
 			audiencia.gritaGol();
 
 		} catch (Throwable e) {
-			log.info("excepción: " + e.getMessage());
+			log.info("excepcion: " + e.getMessage());
 
 			audiencia.abuchear();
 			audiencia.abuchear();
+			
+		} finally {
+			audiencia.seSienta();
 		}
-		audiencia.seSienta();
 
 		log.info("------------");
 
@@ -93,7 +101,7 @@ public class PartidoSpringNoAopXmlTest {
 			audiencia.aplaudir();
 
 		} catch (Throwable e) {
-			log.info("excepción: " + e.getMessage());
+			log.info("excepcion: " + e.getMessage());
 		}
 
 		log.info("------------");
@@ -107,7 +115,7 @@ public class PartidoSpringNoAopXmlTest {
 			audiencia.aplaudir();
 
 		} catch (Throwable e) {
-			log.info("excepción: " + e.getMessage());
+			log.info("excepcion: " + e.getMessage());
 		}
 
 		log.info("------------");
