@@ -1,10 +1,28 @@
 package org.certificatic.spring.core.practicaE.propertyeditor.editor;
 
+import java.beans.PropertyEditorSupport;
+
 import org.certificatic.spring.core.practicaE.propertyeditor.bean.CreditCard;
 import org.springframework.util.StringUtils;
 
 // Extiende PropertyEditorSupport
-public class CreditCardEditor {
+public class CreditCardEditor extends PropertyEditorSupport {
+
+	@Override
+	public String getAsText() {
+		
+		CreditCard creditCard = (CreditCard) this.getValue();
+		
+		return creditCard != null ? creditCard.getRawCardNumber() : "";
+	}
+
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		
+		CreditCard creditCard = parseCreditCardFromText(text);
+		
+		this.setValue(creditCard);
+	}
 
 	public CreditCard parseCreditCardFromText(String text) {
 		if (StringUtils.isEmpty(text)) {

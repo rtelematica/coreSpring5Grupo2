@@ -46,9 +46,10 @@ public class PropertyEditorRegistrarTest {
 		Assert.assertEquals(0, creditCard.getCheckCode(), 0);
 		Assert.assertEquals("1234-5698-7654-3210", creditCard.getRawCardNumber());
 
-		Assert.assertEquals(222222, customer.getCreditCard().getBankIdNo(), 0);
-		Assert.assertEquals(333333333, customer.getCreditCard().getAccountNo(), 0);
+		// 1111-2222-3333-4444
+		Assert.assertEquals(111122, customer.getCreditCard().getBankIdNo(), 0);
+		Assert.assertEquals(223333444, customer.getCreditCard().getAccountNo(), 0);
 		Assert.assertEquals(4, customer.getCreditCard().getCheckCode(), 0);
-		Assert.assertEquals("2222-2233-3333-3334", customer.getCreditCard().getRawCardNumber());
+		Assert.assertEquals("1111-2222-3333-4444", customer.getCreditCard().getRawCardNumber());
 	}
 }

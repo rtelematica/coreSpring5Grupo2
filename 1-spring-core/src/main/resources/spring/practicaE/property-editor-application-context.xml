@@ -6,7 +6,22 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- Define el bean CustomEditorConfigurer -->
+	<bean 
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		
+		<property name="customEditors">
+			<map>
+				<entry key="org.certificatic.spring.core.practicaE.propertyeditor.bean.CreditCard"
+						value="org.certificatic.spring.core.practicaE.propertyeditor.editor.CreditCardEditor" />
+			</map>
+		</property>
+		
+	</bean>
 	
 	<!-- Define el bean Customer -->
+	<bean class="org.certificatic.spring.core.practicaE.propertyeditor.bean.Customer">
+		<property name="name" value="Ivan Garcia" />
+		<property name="creditCard" value="1111-2222-3333-4444" />
+	</bean>
 
 </beans>

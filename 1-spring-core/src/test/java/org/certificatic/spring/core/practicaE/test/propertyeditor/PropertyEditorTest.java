@@ -2,6 +2,7 @@ package org.certificatic.spring.core.practicaE.test.propertyeditor;
 
 import org.certificatic.spring.core.practicaE.propertyeditor.bean.CreditCard;
 import org.certificatic.spring.core.practicaE.propertyeditor.bean.Customer;
+import org.certificatic.spring.core.practicaE.propertyeditor.config.PropertyEditorConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = PropertyEditorConfig.class)
-@ContextConfiguration(locations = PropertyEditorTest.location)
+@ContextConfiguration(classes = PropertyEditorConfig.class)
+//@ContextConfiguration(locations = PropertyEditorTest.location)
 public class PropertyEditorTest {
 
 	public static final String location = "classpath:/spring/practicaE/property-editor-application-context.xml";
@@ -47,10 +48,11 @@ public class PropertyEditorTest {
 		Assert.assertEquals(0, creditCard.getCheckCode(), 0);
 		Assert.assertEquals("1234-5698-7654-3210", creditCard.getRawCardNumber());
 
-		Assert.assertEquals(222222, customer.getCreditCard().getBankIdNo(), 0);
-		Assert.assertEquals(333333333, customer.getCreditCard().getAccountNo(), 0);
+		// 1111-2222-3333-4444
+		Assert.assertEquals(111122, customer.getCreditCard().getBankIdNo(), 0);
+		Assert.assertEquals(223333444, customer.getCreditCard().getAccountNo(), 0);
 		Assert.assertEquals(4, customer.getCreditCard().getCheckCode(), 0);
-		Assert.assertEquals("2222-2233-3333-3334", customer.getCreditCard().getRawCardNumber());
+		Assert.assertEquals("1111-2222-3333-4444", customer.getCreditCard().getRawCardNumber());
 	}
 
 }
