@@ -10,8 +10,11 @@
 		class="org.certificatic.spring.core.practica21.methodreplacement.bean.SportCar">
 		<property name="model" value="CLA 250 sport" />
 		<!--  define metodo a reemplazar -->
+		<replaced-method name="run" replacer="sportCarReplacer" />
 	</bean>
 
 	<!-- define been que va a reemplazar -->
+	<bean id="sportCarReplacer"
+		class="org.certificatic.spring.core.practica21.methodreplacement.replacer.RunReplacer" />
 
 </beans>
