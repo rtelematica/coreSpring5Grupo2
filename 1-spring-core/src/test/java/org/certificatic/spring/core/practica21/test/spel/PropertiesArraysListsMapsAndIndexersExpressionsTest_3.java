@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import org.certificatic.spring.core.practica21.spel.configuration.SocietyStub;
 import org.certificatic.spring.core.practica21.spel.model.Inventor;
 import org.certificatic.spring.core.practica21.spel.model.PlaceOfBirth;
-import org.certificatic.spring.core.practica21.test.spel.model.stub.SocietyStub;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;

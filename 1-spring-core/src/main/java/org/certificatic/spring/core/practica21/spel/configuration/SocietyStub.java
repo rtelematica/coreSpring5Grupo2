@@ -1,4 +1,4 @@
-package org.certificatic.spring.core.practica21.test.spel.model.stub;
+package org.certificatic.spring.core.practica21.spel.configuration;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

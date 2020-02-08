@@ -1,7 +1,7 @@
 package org.certificatic.spring.core.practica21.test.spel;
 
+import org.certificatic.spring.core.practica21.spel.configuration.SocietyStub;
 import org.certificatic.spring.core.practica21.spel.model.Inventor;
-import org.certificatic.spring.core.practica21.test.spel.model.stub.SocietyStub;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
