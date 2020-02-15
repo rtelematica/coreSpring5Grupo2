@@ -23,10 +23,22 @@
 	</bean>
 
 	<!-- Inicia el bean aop:config -->
+	<aop:config>
+		
+		<!-- Inicia la configuracíon de un aspecto -->
+		<aop:aspect>
+		
+			<!-- Dentro del aspecto declara un nuevo parent -->
+			<aop:declare-parents 
+				types-matching="org.certificatic.spring.aop.practicaF.introductions.bean.api.IStudentAdditionalDetails+" 
+				implement-interface="org.certificatic.spring.aop.practicaF.introductions.bean.api.IStudent"
+				delegate-ref="student" />
+			
+		</aop:aspect>
 	
-	<!-- Inicia la configuracíon de un aspecto -->
 	
-	<!-- Dentro del aspecto declara un nuevo parent -->
+	</aop:config>
+	
 	
 
 </beans>

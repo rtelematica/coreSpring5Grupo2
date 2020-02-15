@@ -20,8 +20,8 @@
 			<aop:pointcut id="cuandoUnJugadorCobraUnPenal" 
 				 expression="execution( public void org.certificatic.spring.aop..IJugador.cobrarPenal(boolean) )" />
 				 
-			<aop:pointcut id="cuandoUnJugadorCobraUnPenal2" 
-				 expression="execution( public void org.certificatic.spring.aop..IJugador.cobrarPenal(boolean) ) and args(esGol) " />
+			<aop:pointcut id="cuandoUnJugadorCobraUnPenal2"
+				 expression="execution( public void org.certificatic.spring.aop..IJugador.cobrarPenal(boolean) ) and args(x) " />
 				 
 			<aop:pointcut id="cuandoUnJugadorCometeFalta" 
 				 expression="execution( public void org.certificatic.spring.aop..IJugador.cometerFal*(..) )" />
@@ -30,7 +30,7 @@
 				 expression="execution( public void org.certificatic.spring.aop..IJugador.tirarAGol(boolean) )" />
 			
 			<aop:pointcut id="cuandoUnJugadorTiraAGol2" 
-				 expression="execution( public void org.certificatic.spring.aop..IJugador.tirarAGol(boolean) ) and args(esGol)" />
+				 expression="execution( public void org.certificatic.spring.aop..IJugador.tirarAGol(boolean) ) and args(x)" />
 				 
 			<aop:pointcut id="cuandoUnJugadorEsExpulsado" 
 				 expression="execution( public void org.certificatic.spring.aop..IJugador.esExpulsado() )" />
@@ -44,7 +44,7 @@
 			<aop:after-throwing pointcut-ref="cuandoUnJugadorCobraUnPenal" method="abuchear"/>
 			<aop:after pointcut-ref="cuandoUnJugadorCobraUnPenal" method="seSienta"/>
 			
-			<aop:around pointcut-ref="cuandoUnJugadorCobraUnPenal2" method="trampa"/>
+			<aop:around pointcut-ref="cuandoUnJugadorCobraUnPenal2" method="trampa" arg-names="x"/>
 			
 			<aop:after pointcut-ref="cuandoUnJugadorCometeFalta" method="abuchear"/>
 			
@@ -52,7 +52,7 @@
 			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol" method="gritaGol"/>
 			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol" method="aplaudir"/>
 			<aop:after-returning pointcut-ref="cuandoUnJugadorTiraAGol" method="aplaudir"/>
-			<aop:around pointcut-ref="cuandoUnJugadorTiraAGol2" method="trampa"/>
+			<aop:around pointcut-ref="cuandoUnJugadorTiraAGol2" method="trampa" arg-names="x"/>
 			
 			<aop:around pointcut-ref="cuandoUnJugadorEsExpulsado" method="sePoneDeNervios"/>
 					

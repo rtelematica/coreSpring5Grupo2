@@ -1,6 +1,8 @@
 package org.certificatic.spring.aop.practica24.bank.aop.logging;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.certificatic.spring.aop.util.Color;
 import org.certificatic.spring.aop.util.bean.api.IColorWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 //Define el Bean como Aspecto
+@Aspect
 @Component("profilingAspect")
 @Slf4j
 public class ProfilingAspect implements Ordered {
@@ -22,11 +25,11 @@ public class ProfilingAspect implements Ordered {
 	@Autowired
 	private IColorWriter colorWriter;
 
-	// Define Around ADvice que intercepte cualquier metodo del paquete
+	// Define Around Advice que intercepte cualquier metodo del paquete
 	// org.certificatic.spring.aop.practica24.bank..* y cache al menos el primer
 	// argumento
-	public Object beforeAccountMethodExecutionAccount(ProceedingJoinPoint pjp,
-			Object obj) throws Throwable {
+	@Around(value="within(org.certificatic..bank..*) and args(algo,..)", argNames ="algo")
+	public Object beforeAccountMethodExecutionAccount(ProceedingJoinPoint pjp, Object obj) throws Throwable {
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start(pjp.toShortString());
@@ -35,7 +38,7 @@ public class ProfilingAspect implements Ordered {
 
 		try {
 
-			return null; // proceder con la ejecucion al target object
+			return pjp.proceed(); // proceder con la ejecucion al target object
 
 		} catch (RuntimeException e) {
 			isExceptionThrown = true;

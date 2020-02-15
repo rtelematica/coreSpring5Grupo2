@@ -14,10 +14,14 @@
 
 	<aop:config>
 
-		<!-- Define pointcut que intercepte la ejecucion de cualuier metodo del paquete practicaG y -->
+		<!-- Define pointcut que intercepte la ejecucion de cualquier metodo del paquete practicaG y -->
 		<!-- que este anotado con @org.certificatic.spring.aop.practicaG.advisors.annotation.MonitorPerformance -->
+		<aop:pointcut id="metodPerformanceExecution" 
+			expression="execution( * org.certificatic..practicaG..*(..) ) and @annotation(org.certificatic.spring.aop.practicaG.advisors.annotation.MonitorPerformance)" />
 		
 		<!-- Define advisor que sea ejecutado en el pointcut anterior por el advice performanceAdvice -->
+		<aop:advisor pointcut-ref="metodPerformanceExecution" 
+			advice-ref="performanceAdvice"/>
 
 	</aop:config>
 
