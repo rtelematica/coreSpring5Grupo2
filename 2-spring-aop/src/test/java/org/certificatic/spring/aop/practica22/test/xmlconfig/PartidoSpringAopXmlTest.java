@@ -39,7 +39,7 @@ public class PartidoSpringAopXmlTest {
 
 		log.info("------------");
 
-		/*try {
+		try {
 			jugador.cobrarPenal(true);
 		} catch (Throwable e) {
 			log.info("excepcion: " + e.getMessage());
@@ -73,7 +73,7 @@ public class PartidoSpringAopXmlTest {
 		}
 		log.info("------------");
 
-		jugador.esExpulsado(); */
+		jugador.esExpulsado();
 	}
 
 }

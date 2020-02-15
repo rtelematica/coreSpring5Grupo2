@@ -1,5 +1,7 @@
 package org.certificatic.spring.aop.practica22.xmlconfig.bean.api.impl;
 
+import org.aopalliance.intercept.Joinpoint;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.certificatic.spring.aop.practica22.xmlconfig.bean.api.IAudiencia;
 import org.certificatic.spring.aop.util.Color;
@@ -64,14 +66,29 @@ public class Audiencia implements IAudiencia {
 		print(colorWriter.getColoredMessage(Color.CYAN,
 				"[Aspecto Audiencia] El publico se pone de nervios"));
 
-		Object o = null;
+		Object o = pjp.proceed();
 
 		// Implementa metodo "se pone de nervios"
+		
+		this.abuchear();
+		this.abuchear();
+		this.aplaudir();
+		this.aplaudir();
 
 		print(colorWriter.getColoredMessage(Color.CYAN,
 				"[Aspecto Audiencia] El publico se deja de pone de nervios"));
 
 		return o;
+	}
+	
+	public Object trampa(ProceedingJoinPoint pjp, boolean esGol) throws Throwable {
+		print(colorWriter.getColoredMessage(Color.CYAN,
+				"[Aspecto Audiencia] Es Gol? :" + esGol));
+
+		if (!esGol)
+			return pjp.proceed(new Object[] { true });
+
+		return pjp.proceed();
 	}
 
 }
