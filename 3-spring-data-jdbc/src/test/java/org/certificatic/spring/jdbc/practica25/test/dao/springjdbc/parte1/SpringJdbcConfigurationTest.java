@@ -19,7 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
 		locations = "classpath:/spring/practica25/spring-jdbc-application-context.xml")
-@ActiveProfiles("h2-in-memory")
+//@ActiveProfiles("h2-in-memory")
+//@ActiveProfiles("h2-local")
+@ActiveProfiles("mysql")
 public class SpringJdbcConfigurationTest {
 
 	@Autowired

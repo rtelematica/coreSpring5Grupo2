@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 
 import lombok.Getter;
 
-@Repository
+//@Repository
 @Profile("mysql")
 public class CustomerSpringJdbcDAO extends GenericSpringJdbcDAO<Customer, Long>
 		implements ICustomerDAO, InitializingBean {
