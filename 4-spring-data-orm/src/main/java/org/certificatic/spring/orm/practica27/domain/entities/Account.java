@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.domain.entities;
+package org.certificatic.spring.orm.practica27.domain.entities;
 
 import java.math.BigDecimal;
 
@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.certificatic.spring.orm.domain.vo.CustomDate;
-import org.certificatic.spring.orm.hibernate.customtypes.DateTimeUserType;
+import org.certificatic.spring.orm.practica27.domain.vo.CustomDate;
+import org.certificatic.spring.orm.practica27.hibernate.customtypes.DateTimeUserType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;

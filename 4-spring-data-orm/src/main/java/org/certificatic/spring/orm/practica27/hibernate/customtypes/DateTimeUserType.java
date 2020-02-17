@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.hibernate.customtypes;
+package org.certificatic.spring.orm.practica27.hibernate.customtypes;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import org.certificatic.spring.orm.domain.vo.CustomDate;
+import org.certificatic.spring.orm.practica27.domain.vo.CustomDate;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;

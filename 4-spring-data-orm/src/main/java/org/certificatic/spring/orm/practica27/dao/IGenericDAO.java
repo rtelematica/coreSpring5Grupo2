@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.dao;
+package org.certificatic.spring.orm.practica27.dao;
 
 import java.io.Serializable;
 import java.util.List;

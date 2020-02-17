@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.domain.vo;
+package org.certificatic.spring.orm.practica27.domain.vo;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.domain.entities;
+package org.certificatic.spring.orm.practica27.domain.entities;
 
 import java.util.ArrayList;
 import java.util.List;

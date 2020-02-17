@@ -1,10 +1,10 @@
-package org.certificatic.spring.orm.dao.hibernate.impl;
+package org.certificatic.spring.orm.practica27.dao.hibernate.impl;
 
 import java.util.List;
 
-import org.certificatic.spring.orm.dao.api.IAccountDAO;
-import org.certificatic.spring.orm.dao.hibernate.GenericHibernateDAO;
-import org.certificatic.spring.orm.domain.entities.Account;
+import org.certificatic.spring.orm.practica27.dao.api.IAccountDAO;
+import org.certificatic.spring.orm.practica27.dao.hibernate.GenericHibernateDAO;
+import org.certificatic.spring.orm.practica27.domain.entities.Account;
 
 // Habilitar bean Repository 
 public class AccountHibernateDAO extends GenericHibernateDAO<Account, Long>

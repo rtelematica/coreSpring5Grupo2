@@ -1,10 +1,10 @@
-package org.certificatic.spring.orm.dao.hibernate;
+package org.certificatic.spring.orm.practica27.dao.hibernate;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.certificatic.spring.orm.dao.IGenericDAO;
-import org.certificatic.spring.orm.dao.hibernate.api.IHibernateExtraOperationsDAO;
+import org.certificatic.spring.orm.practica27.dao.IGenericDAO;
+import org.certificatic.spring.orm.practica27.dao.hibernate.api.IHibernateExtraOperationsDAO;
 import org.hibernate.SessionFactory;
 
 import lombok.Getter;

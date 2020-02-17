@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.dao.hibernate.api;
+package org.certificatic.spring.orm.practica27.dao.hibernate.api;
 
 import java.io.Serializable;
 
