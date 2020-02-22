@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 @ToString(exclude = { "customer" })
 @EqualsAndHashCode(exclude = { "customer" })
-public class User {
+public class User implements IUser {
 
 	private Long id;
 
@@ -22,5 +22,7 @@ public class User {
 	private String username;
 
 	private String password;
+
+	private boolean isNull = false;
 
 }
