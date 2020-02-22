@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.certificatic.spring.jdbc.pratica25.dao.IGenericDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
 import lombok.Getter;
 
@@ -13,10 +13,10 @@ public abstract class GenericSpringJdbcDAO<T, ID extends Serializable> implement
 
 	// Inyectar JdbcTemplate
 	@Autowired
-	protected @Getter JdbcTemplate jdbcTemplate;
+	protected @Getter JdbcOperations jdbcTemplate;
 
 	// Inyectar NamedParameterJdbcTemplate
 	@Autowired
-	protected @Getter NamedParameterJdbcTemplate namedJdbcTemplate;
+	protected @Getter NamedParameterJdbcOperations namedJdbcTemplate;
 
 }

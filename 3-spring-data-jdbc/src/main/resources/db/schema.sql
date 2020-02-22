@@ -40,23 +40,3 @@ BEGIN
 END //
 DELIMITER ;
 */
-
-/* MYSQL
-DELIMITER //
-CREATE PROCEDURE read_user (
-    IN in_customerId INTEGER,
-    OUT out_user_id integer,
-    OUT out_fk_customer_id integer,
-    OUT out_username VARCHAR(100),
-    OUT out_password VARCHAR(100))
-BEGIN
-    SELECT USER_ID, FK_CUSTOMER_ID, USERNAME, PASSWORD 
-    INTO out_user_id, out_fk_customer_id, out_username, out_password 
-    FROM USER_TBL where FK_CUSTOMER_ID = in_customerId;
-END //
-DELIMITER ;
-*/
-
-
-
-

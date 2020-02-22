@@ -17,7 +17,7 @@ public class CustomerSqlUpdate extends SqlUpdate {
 		declareParameter(new SqlParameter("NAME", Types.VARCHAR));
 		declareParameter(new SqlParameter("LAST_NAME", Types.VARCHAR));
 		declareParameter(new SqlParameter("CUSTOMER_ID", Types.INTEGER));
-
+		
 		compile();
 	}
 

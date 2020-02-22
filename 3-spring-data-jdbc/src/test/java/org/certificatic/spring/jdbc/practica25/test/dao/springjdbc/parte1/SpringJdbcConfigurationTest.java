@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -28,7 +29,7 @@ public class SpringJdbcConfigurationTest {
 	private DataSource datasource;
 
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	private JdbcOperations jdbcTemplate;
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedJdbcTemplate;
@@ -42,7 +43,7 @@ public class SpringJdbcConfigurationTest {
 
 	@Test
 	public void test() {
-		Assert.assertSame(datasource, jdbcTemplate.getDataSource());
+		Assert.assertSame(datasource, ((JdbcTemplate)jdbcTemplate).getDataSource());
 		Assert.assertSame(datasource,
 				((JdbcTemplate) namedJdbcTemplate.getJdbcOperations())
 						.getDataSource());

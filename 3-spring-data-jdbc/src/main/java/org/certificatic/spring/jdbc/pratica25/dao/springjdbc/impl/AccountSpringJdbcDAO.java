@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.certificatic.spring.jdbc.pratica25.dao.api.IAccountDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.GenericSpringJdbcDAO;
+import org.certificatic.spring.jdbc.pratica25.dao.springjdbc.rowmapper.AccountRowMapper;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Account;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile({ "h2-in-memory", "h2-local", "mysql" })
-public class AccountSpringJdbcDAO extends GenericSpringJdbcDAO<Account, Long>
-		implements IAccountDAO {
+public class AccountSpringJdbcDAO extends GenericSpringJdbcDAO<Account, Long> implements IAccountDAO {
 
 	private static final String SELECT_ALL_ACCOUNT_WHERE_CUSTOMER_ID = "SELECT * FROM ACCOUNT_TBL WHERE FK_CUSTOMER_ID = ?";
 	private static final String SELECT_ALL_ACCOUNT = "SELECT * FROM ACCOUNT_TBL";
@@ -31,41 +34,45 @@ public class AccountSpringJdbcDAO extends GenericSpringJdbcDAO<Account, Long>
 
 		// Implementar mediante JdbcTemplate y AccountRowMapper
 		// Se espera una lista de objetos
-		return null;
+		return this.jdbcTemplate.query(SELECT_ALL_ACCOUNT_WHERE_CUSTOMER_ID, new AccountRowMapper(), id);
 	}
 
 	@Override
-	public void insert(Account entity) {
+	public void insert(Account account) {
 		// INSERT Account
 
 		// Implementar mediante NamedParameterJdbcTemplate, SqlParameterSource y
 		// KeyHolder
-
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+		parameterSource.addValue("fkCustomerId", account.getCustomer().getId());
+		parameterSource.addValue("accountNumber", account.getAccountNumber());
+		parameterSource.addValue("createdDate", account.getCreatedDate());
+		parameterSource.addValue("balance", account.getBalance());
+		
+		this.namedJdbcTemplate.update(INSERT_ACCOUNT, parameterSource, keyHolder);
+		
+		account.setId(keyHolder.getKey().longValue());
 	}
 
 	@Override
-	public void update(Account entity) {
+	public void update(Account account) {
 		// UPDATE ACCOUNT
 
 		// Implementar mediante JdbcTemplate
+		this.jdbcTemplate.update(UPDATE_ACCOUNT_WHERE_CUSTOMER_ID , 
+				account.getAccountNumber(), 
+				account.getCreatedDate(),
+				account.getBalance(), 
+				account.getCustomer().getId());
 	}
 
 	@Override
 	public Account findById(Long id) {
-		Account account = null;
-
-		// FIND ACCOUNT BY ID
-		try {
-
-			// Implementar mediante JdbcTemplate y AccountRowMapper
-			// Se espera un �nico objeto
-
-		} catch (EmptyResultDataAccessException ex) {
-			// Cuando se usa queryForObject se espera al menos 1 resultado.
-			return null;
-		}
-
-		return account;
+		return this.jdbcTemplate.queryForObject(SELECT_ACCOUNT, 
+					new AccountRowMapper(), id);
 	}
 
 	@Override
@@ -75,25 +82,24 @@ public class AccountSpringJdbcDAO extends GenericSpringJdbcDAO<Account, Long>
 	}
 
 	@Override
-	public Account delete(Account entity) {
-		if (entity == null)
-			return entity;
+	public Account delete(Account account) {
+		if (account == null)
+			return account;
 
 		// DELETE ACCOUNT
 
 		// Implementar mediante JdbcTemplate
+		this.jdbcTemplate.update(DELETE_ACCOUNT, account.getId());
 
-		return entity;
+		return account;
 	}
 
 	@Override
 	public List<Account> findAll() {
-		List<Account> userList = null;
 
 		// FIND ALL Account
 		// Implementar mediante JdbcTemplate y AccountRowMapper
-
-		return userList;
+		return this.jdbcTemplate.query(SELECT_ALL_ACCOUNT, new AccountRowMapper());
 	}
 
 }

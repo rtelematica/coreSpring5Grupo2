@@ -7,7 +7,7 @@ import org.certificatic.spring.jdbc.pratica25.dao.api.ICustomerDAO;
 import org.certificatic.spring.jdbc.pratica25.dao.api.IUserDAO;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Account;
 import org.certificatic.spring.jdbc.pratica25.domain.entities.Customer;
-import org.certificatic.spring.jdbc.pratica25.domain.entities.User;
+import org.certificatic.spring.jdbc.pratica25.domain.entities.IUser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica25/spring-jdbc-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica25/spring-jdbc-application-context.xml")
 @ActiveProfiles("h2-in-memory")
 public class AccountSpringJdbcDAOTest {
 
@@ -41,12 +40,20 @@ public class AccountSpringJdbcDAOTest {
 		Assert.assertNotNull(customerDAO);
 		Assert.assertNotNull(accountDAO);
 	}
+	
+	@Test
+	public void handlerExceptionTest() {
+		
+		Account a = this.accountDAO.findById(50_000L);
+		
+		Assert.assertNull(a);
+	}
 
 	@Test
 	public void accountSpringJdbcDAOTest() {
 		log.info("accountSpringJdbcDAOTest -------------------");
 
-		User user = userDAO.findById(1L);
+		IUser user = userDAO.findById(1L);
 
 		Customer customer = customerDAO.findById(1L);
 

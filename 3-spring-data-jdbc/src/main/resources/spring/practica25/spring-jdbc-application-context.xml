@@ -10,7 +10,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<context:component-scan base-package="org.certificatic.spring.jdbc.pratica25.dao" />
-
+	
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
 	<!-- Import DataSource -->
 	<import
 		resource="classpath:/spring/practica25/datasource-application-context.xml" />
