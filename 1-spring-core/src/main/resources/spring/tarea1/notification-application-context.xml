@@ -4,9 +4,21 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- define bean NotificationServiceImpl e inyecta bean interno TwitterMessageServiceImpl -->
+	<bean class="org.certificatic.spring.core.tarea1.messaging.service.api.impl.NotificationServiceImpl">
+		<property name="emailMessageService" ref="emailMessageServiceBean" />
+		<property name="facebookMessageService" ref="facebookMessageServiceBean" />
+		<property name="twitterMessageService">
+			<bean
+				class="org.certificatic.spring.core.tarea1.notification.service.api.impl.TwitterMessageServiceImpl" />
+		</property>
+	</bean>
 
 	<!-- define bean facebookMessageServiceBean de la clase FacebookMessageServiceImpl -->
+	<bean id="facebookMessageServiceBean" 
+		class="org.certificatic.spring.core.tarea1.notification.service.api.impl.FacebookMessageServiceImpl" />
 
 	<!-- define bean emailMessageServiceBean de la clase EmailMessageServiceImpl -->
+	<bean id="emailMessageServiceBean" 
+		class="org.certificatic.spring.core.tarea1.notification.service.api.impl.EmailMessageServiceImpl" />
 
 </beans>

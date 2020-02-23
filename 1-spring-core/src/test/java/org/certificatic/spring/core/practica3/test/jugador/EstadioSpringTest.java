@@ -28,7 +28,8 @@ public class EstadioSpringTest {
 		log.info("estadioSpringTest1 -------------------");
 
 		// Implementar
-		JugadorFutbol jugador = (JugadorFutbol) applicationContext.getBean("jugadorBean");
+		// JugadorFutbol jugador = (JugadorFutbol) applicationContext.getBean("jugadorBean");
+		IJugador jugador = (IJugador) applicationContext.getBean("jugadorBean");
 
 		Assert.assertNotNull(jugador);
 		Assert.assertNotNull(jugador.getTorneo());

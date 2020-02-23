@@ -1,46 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:c="http://www.springframework.org/schema/c" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-	<!-- Define bean Agenda
+	<!-- Define bean Agenda -->
 	<bean
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Agenda">
-	</bean>  -->
+		<property name="autosFamilia" ref="autosFamiliaSetBean" />
+		<property name="properties" ref="misPropertiesBean" />
+		<property name="numeros" ref="numerosMapBean" />
+		<property name="notas" ref="notasListBean" />
+	</bean>
 
 	<bean
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Persona"
-		p:nombre="Ivan Garcia" p:auto-ref="autoBean" />
+		p:nombre="Ivan Garcia" p:auto-ref="autoBmwBean" />
 
-	<bean id="autoBean"
+	<bean id="autoBmwBean"
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Auto"
 		c:marca="BMW" c:modelo-ref="modeloStringBean" />
 
+	<bean id="autoMustangBean"
+		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Auto"
+		c:marca="Ford" c:modelo="Mustang GT" />
+
 	<!-- Define Beans al gusto usando p, c y util -->
-	<bean id="modeloStringBean" 
-		class="java.lang.String">
+	<bean id="modeloStringBean" class="java.lang.String">
 		<constructor-arg value="330ia" />
 	</bean>
-	
-	<bean class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Circulo">
+
+	<bean
+		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.Circulo">
 		<property name="pi">
-			<util:constant static-field="java.lang.Math.PI"/>
+			<util:constant static-field="java.lang.Math.PI" />
 		</property>
 		<property name="radio" value="3" />
 	</bean>
-	
-	<bean 
+
+	<bean
 		class="org.certificatic.spring.core.tarea2.namespaces.pcutil.bean.MisProperties">
-		<property name="nombreCurso" value="??????" />
-		<property name="nombreHijo" value="??????" />
-		<property name="programmerName" value="??????" />
+		<property name="nombreCurso"
+			value="#{misPropertiesBean['curso.nombre']}" />
+		<property name="nombreHijo"
+			value="#{misPropertiesBean['familia.hijo.nombre']}" />
+		<property name="programmerName"
+			value="#{misPropertiesBean['programmer.name']}" />
 	</bean>
-	
-	<util:properties id="misPropertiesBean" 
+
+	<util:properties id="misPropertiesBean"
 		location="classpath:/spring/tarea2/properties/*.properties">
-		<prop key="programmer.name">Tu nombre</prop>
+		<prop key="programmer.name">Ivan Garcia</prop>
 	</util:properties>
-	
+
+	<util:set id="autosFamiliaSetBean"
+		set-class="java.util.HashSet">
+		<ref bean="autoBmwBean" />
+		<ref bean="autoMustangBean" />
+	</util:set>
+
+	<util:map id="numerosMapBean" key-type="java.lang.String"
+		value-type="java.lang.Integer">
+		<entry key="uno" value="1" />
+		<entry key="dos" value="2" />
+		<entry key="tres" value="3" />
+	</util:map>
+
+	<util:list id="notasListBean"
+		list-class="java.util.ArrayList" value-type="java.lang.String">
+		<value>una nota</value>
+		<value>dos notas</value>
+		<value>tres notas</value>
+	</util:list>
+
 </beans>

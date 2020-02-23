@@ -77,7 +77,7 @@ public class ResourcesTestUtils {
 
 		Document doc = Jsoup.parse(readText);
 
-		Assert.assertEquals(expectedText, doc.title());
+		Assert.assertTrue(doc.title().startsWith(expectedText));
 
 		log.info("HTML <title>: {}", doc.title());
 
