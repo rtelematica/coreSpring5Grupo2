@@ -50,59 +50,70 @@ public class SpringDataMongodbDemosTest {
 		// ***************Staff query methods***************
 
 		// Paging and Sorting Queries
-		System.out.println("\nFind all staff members, sort alphabetically by first name and last name");
-		Sort sortByLastName = new Sort(Sort.Direction.ASC, "member.lastName", "member.firstName");
-		staffRepository.findAll(sortByLastName).forEach(System.out::println);
+		System.out.println("\nFind all staff members, sort alphabetically by first name and last name");		
+		Sort sortByLastName = null; // Define Sort por "member.lastName", "member.firstName" Ascendente
+		
+		// Consulta todo el Staff ordenado por Sort e imprime los resultados 
 
-		int total3StaffMembers = Long.valueOf(staffRepository.count()).intValue();
+		int total3StaffMembers = 0; // Cuenta cuantos Staff existen en el repositorio
 		String[] th = { "st", "nd", "rd", "th" };
 
+		// Implementa paginacon
 		for (int i = 0; i < Math.ceil(total3StaffMembers / 3D); i++) {
+			
 			System.out.println("\nFind " + (i + 1) + th[(i < 3) ? i : 3] + " 3 Staff members of " + total3StaffMembers
 					+ ", sort by alphabetically by last name using PageRequest");
-			Page<Staff> staff = staffRepository.findAll(PageRequest.of(i, 3, sortByLastName));
+			
+			Page<Staff> staff = null; // consulta todos los Staff de forma paginada (tamanio de pagina de 3 elementos) y ordenalos conforme a la variable Sort "sortByLastName" definida.
+			
 			staff.forEach(System.out::println);
 		}
 
 		System.out.println("\nFind first 3 Staff members, sort alphabetically by last name using PageRequest");
-		Page<Staff> members = staffRepository.findAll(PageRequest.of(0, 3, sortByLastName));
+		Page<Staff> members = null; // busca la primera pagina de tamanio 3 de todos los Staff en el repositorio, utiliza la variable Sort "sortByLastName" para ordenarlos.
 		members.forEach(System.out::println);
 
 		// Property Expression
 		System.out.println("\nFind all staff members with last name King");
-		staffRepository.findByMemberLastName("King").forEach(System.out::println);
+		// busca los Staff con "member.lastName" igual a "King"
 
 		// @Query with JSON query string
 		// "{ 'member.firstName' : ?0 }"
 		System.out.println("\nFind all staff members with first name John");
-		staffRepository.findByFirstName("John").forEach(System.out::println);
+		// busca los Staff por "firstName" igual a "John", utiliza @Query para definir una consulta nativa MongoDB.
 
 		// ***************Department query methods***************
 
 		// Sorting example, MongoRepository extends PagingAndSortingRepository
 		System.out.println("\nFind all Departments, sort alphabetically by name Descending");
-		departmentRepository.findAll(new Sort(Sort.Direction.DESC, "name")).forEach(System.out::println);
+		// busca todos los departamentos, ordenalos definiendo un Sort por "name" descendientemente.
 
 		// Property Expression
 		System.out.println("\nFind Department with the exact name 'Humanities' \n"
-				+ departmentRepository.findByName("Humanities"));
+				+ null); // busca el departamento por "name" igual a "Humanities".
 
 		// @Query with JSON query string that accepts regular expression as a parameter
 		// { 'name' : { $regex: ?0 } }
 		// Any department name that ends in sciences where 's' is case insensitive
 		System.out.println("\nFind all Departments with name ending in Sciences");
-		departmentRepository.findNameByPattern(".[Ss]ciences").forEach(System.out::println);
+		// busca todos los Department donde el "name" termine con "sciences" (case-insensitive), usa @Query methods
+		
+		// busca todos los Department donde el "name" termine con "sciences" (case-insensitive), usa derived queries
+		
 
 		try {
 			// Invalid Method, will fail at runtime
 			System.out.println("\nInvalid Method, cannot cross DBRef's in queries");
-			departmentRepository.findByChairMemberLastName("Jones");
+			// Intenta buscar los Department por Chair Member LastName igual a "Jones", utiliza derived queries.
+			
 
-			Assert.fail("Should fail at this point");
+			//Assert.fail("Should fail at this point");
 
 		} catch (MappingException ex) {
 			System.out.println("exception: " + ex.getMessage());
 		}
+		
+		// Logra hacer la consulta de los Department por Chair Member LastName igual a "Jones", utiliza custom repositories.
 
 		log.info("mongoQueryMethods test ends =======================================================");
 	}

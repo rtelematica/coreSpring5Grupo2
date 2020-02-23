@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@ActiveProfiles({ "init-database" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringDataJdbcConfiguration.class)
 public class SpringDataJdbcDemosTest {
@@ -47,13 +46,8 @@ public class SpringDataJdbcDemosTest {
 
 		// ***************Insert Departments***************
 
-		long insertedDepartments = departments.stream()
-				.peek(d -> {
-					log.info("SQL to create {} department id: {}", d.getName(), d.getId());
-				})
-				.map(d -> departmentRepository.save(d))
-				.peek(d -> log.info("department {} inserted with id: {}\n", d.getName(), d.getId()))
-				.count();
+		long insertedDepartments = 0L; // Inserta los Department, utiliza un Stream y cuenta cuantos fueron insertados.
+				
 
 		log.info("Inserted {} departments\n", insertedDepartments);
 
@@ -61,12 +55,12 @@ public class SpringDataJdbcDemosTest {
 		// ***************Simple Queries***************
 
 		log.info("SQL to Fetch all Departments");
-		departmentRepository.findAll().forEach(System.out::println);
+		// busca todos los Department
 
 		System.out.println();
 
 		log.info("SQL to find By Name Humanities");
-		Optional<Department> optionalDepartment = departmentRepository.findByName("Humanities");
+		Optional<Department> optionalDepartment = null; // busca Department por "name" igual a "Humanities".
 
 		optionalDepartment.ifPresent(department -> {
 
@@ -81,13 +75,13 @@ public class SpringDataJdbcDemosTest {
 			System.out.println();
 
 			log.info("SQL to update Humanities department. Deparment id = " + department.getId());
-			departmentRepository.save(department);
+			// actualiza el Departamento (update)
 
 			System.out.println();
 		});
 
 		log.info("SQL to fetch Humanities department\n" +
-				departmentRepository.findByName("Humanities").get());
+				null); // busca de nuevo el Department por "name" igual a "Humanities".
 
 		System.out.println();
 
