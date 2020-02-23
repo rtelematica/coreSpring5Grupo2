@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:component-scan
-		base-package="org.certificatic.spring.orm.dao.hibernate.impl" />
+		base-package="org.certificatic.spring.orm.practica27.dao.hibernate.impl" />
 
 	<import
 		resource="classpath:/spring/practica27/datasource-application-context.xml" />

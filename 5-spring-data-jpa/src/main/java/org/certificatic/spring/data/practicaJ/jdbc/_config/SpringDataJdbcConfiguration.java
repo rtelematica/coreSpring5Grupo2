@@ -1,0 +1,76 @@
+package org.certificatic.spring.data.practicaJ.jdbc._config;
+
+import javax.sql.DataSource;
+
+import org.certificatic.spring.data.practicaJ.jdbc.entity.Chair;
+import org.certificatic.spring.data.practicaJ.jdbc.entity.Department;
+import org.certificatic.spring.data.practicaJ.jdbc.repositories.DepartmentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
+import org.springframework.data.jdbc.repository.config.JdbcConfiguration;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+//Clase de configuración @Configuration
+@Configuration
+//Component Scan de paquete base Spring data practicaJ JDBC
+@ComponentScan(basePackages = "org.certificatic.spring.data.practicaJ.jdbc")
+
+//Habilitar repositorios Spring Data JDBC
+
+//Opcional habilitar manejo transaccional
+
+//Extiende de JdbcConfiguration, la clase de configuracion debe configurar otros beans de infraestructura
+public class SpringDataJdbcConfiguration {
+
+	// Define Bean DataSource
+	
+	// Define Bean NamedParameterJdbcTemplate (Spring Data JDBC unicamente soprota queries con parametros nombrados, NO por posicion)
+	
+	// Opcional, definir Bean PlatformTransactionManager del tipo DataSourceTransactionManager
+
+	@Autowired
+	private DepartmentRepository departmentRepository;
+
+	@Bean
+	@Profile("init-database")
+	public ApplicationListener<ContextRefreshedEvent> startupBean() {
+
+		return new ApplicationListener<ContextRefreshedEvent>() {
+
+			@SuppressWarnings("unused")
+			@Override
+			public void onApplicationEvent(ContextRefreshedEvent event) {
+
+				// Chairs
+				Chair deanJones = null; // crea nuevo objeto Chair "Dean Jones"
+				Chair deanMartin = null; // crea nuevo objeto Chair "Dean Martin"
+				Chair deanCain = null; // crea nuevo objeto Chair "Dean Cain"
+
+				// Departments
+				log.info("SQL to Create Humanities");
+				// almacena Departamento "Humanities" con deanJones como jefe de depto
+
+				log.info("SQL to Create Natural Sciences");
+				// almacena Departamento "Natural Sciences" con deanMartin como jefe de depto
+
+				log.info("SQL to Create Social Sciences");
+				// almacena Departamento "Social Sciences" con deanJones como jefe de depto
+			}
+		};
+	}
+}

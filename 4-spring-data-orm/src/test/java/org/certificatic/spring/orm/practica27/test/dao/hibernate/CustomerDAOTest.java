@@ -1,10 +1,10 @@
 package org.certificatic.spring.orm.practica27.test.dao.hibernate;
 
-import org.certificatic.spring.orm.dao.api.ICustomerDAO;
-import org.certificatic.spring.orm.dao.api.IUserDAO;
-import org.certificatic.spring.orm.dao.hibernate.api.IHibernateExtraOperationsDAO;
-import org.certificatic.spring.orm.domain.entities.Customer;
-import org.certificatic.spring.orm.domain.entities.User;
+import org.certificatic.spring.orm.practica27.dao.api.ICustomerDAO;
+import org.certificatic.spring.orm.practica27.dao.api.IUserDAO;
+import org.certificatic.spring.orm.practica27.dao.hibernate.api.IHibernateExtraOperationsDAO;
+import org.certificatic.spring.orm.practica27.domain.entities.Customer;
+import org.certificatic.spring.orm.practica27.domain.entities.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
