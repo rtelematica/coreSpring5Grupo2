@@ -7,7 +7,6 @@ import org.certificatic.spring.core.utils.DateUtils;
 import org.certificatic.spring.orm.practica27.dao.api.IAccountDAO;
 import org.certificatic.spring.orm.practica27.dao.api.ICustomerDAO;
 import org.certificatic.spring.orm.practica27.dao.api.IUserDAO;
-import org.certificatic.spring.orm.practica27.dao.hibernate.api.IHibernateExtraOperationsDAO;
 import org.certificatic.spring.orm.practica27.domain.entities.Account;
 import org.certificatic.spring.orm.practica27.domain.entities.Customer;
 import org.certificatic.spring.orm.practica27.domain.entities.User;
@@ -108,7 +107,7 @@ public class HibernateDAOTest {
 
 		customerDAO.insert(newCustomer);
 
-		((IHibernateExtraOperationsDAO<Customer, Long>) customerDAO).detach(newCustomer);
+		customerDAO.detach(newCustomer);
 
 		return newCustomer;
 	}

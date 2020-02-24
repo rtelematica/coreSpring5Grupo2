@@ -2,7 +2,6 @@ package org.certificatic.spring.orm.practica27.test.dao.hibernate;
 
 import org.certificatic.spring.orm.practica27.dao.api.ICustomerDAO;
 import org.certificatic.spring.orm.practica27.dao.api.IUserDAO;
-import org.certificatic.spring.orm.practica27.dao.hibernate.api.IHibernateExtraOperationsDAO;
 import org.certificatic.spring.orm.practica27.domain.entities.Customer;
 import org.certificatic.spring.orm.practica27.domain.entities.User;
 import org.junit.Assert;
@@ -55,7 +54,7 @@ public class CustomerDAOTest {
 
 		log.info("newCustomer : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
-		((IHibernateExtraOperationsDAO<Customer, Long>) customerDAO).detach(newCustomer);
+		customerDAO.detach(newCustomer);
 
 		log.info("newCustomer (detached) : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
@@ -88,7 +87,7 @@ public class CustomerDAOTest {
 
 		log.info("newCustomer : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
-		((IHibernateExtraOperationsDAO<Customer, Long>) customerDAO).detach(newCustomer);
+		customerDAO.detach(newCustomer);
 
 		log.info("newCustomer (detached) : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
@@ -136,7 +135,7 @@ public class CustomerDAOTest {
 
 		log.info("newCustomer : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
-		((IHibernateExtraOperationsDAO<Customer, Long>) customerDAO).detach(newCustomer);
+		customerDAO.detach(newCustomer);
 
 		log.info("newCustomer (detached) : {} {}", newCustomer, System.identityHashCode(newCustomer));
 
