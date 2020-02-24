@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.certificatic.spring.orm.practica27.dao.IGenericDAO;
-import org.certificatic.spring.orm.practica27.dao.hibernate.api.IHibernateExtraOperationsDAO;
 import org.hibernate.SessionFactory;
 
 import lombok.Getter;
 
 public abstract class GenericHibernateDAO<T, ID extends Serializable>
-		implements IGenericDAO<T, ID>, IHibernateExtraOperationsDAO<T, ID> {
+		implements IGenericDAO<T, ID> {
 
 	protected @Getter final Class<T> persistentClass;
 
@@ -32,7 +31,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
 		return (T) this.sessionFactory.getCurrentSession()
 				.get(this.persistentClass, id);

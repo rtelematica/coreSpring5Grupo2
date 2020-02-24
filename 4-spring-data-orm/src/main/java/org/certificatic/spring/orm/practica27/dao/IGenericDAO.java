@@ -16,4 +16,6 @@ public interface IGenericDAO<T, ID extends Serializable> {
 	T delete(final T entity);
 
 	List<T> findAll();
+	
+	void detach(final T entity);
 }
