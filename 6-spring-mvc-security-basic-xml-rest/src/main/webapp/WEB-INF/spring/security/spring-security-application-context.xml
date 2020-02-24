@@ -31,7 +31,7 @@
 
 		<!-- Habilita configuracion http-basic -->
 		
-		<!-- Opcional habilita http-basic con entry-point BasicAuthenticationEntryPoint -->
+		<!-- Opcional habilita http-basic con referencia al entry-point BasicAuthenticationEntryPoint -->
 
 	</security:http>
 	
