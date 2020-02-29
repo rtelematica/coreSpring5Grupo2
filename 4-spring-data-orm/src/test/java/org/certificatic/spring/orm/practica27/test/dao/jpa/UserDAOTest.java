@@ -1,5 +1,6 @@
-package org.certificatic.spring.orm.practica27.test.dao.hibernate;
+package org.certificatic.spring.orm.practica27.test.dao.jpa;
 
+import org.certificatic.spring.orm.practica27.dao.api.IAccountDAO;
 import org.certificatic.spring.orm.practica27.dao.api.ICustomerDAO;
 import org.certificatic.spring.orm.practica27.dao.api.IUserDAO;
 import org.certificatic.spring.orm.practica27.domain.entities.Customer;
@@ -20,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/spring/practica27/orm-hibernate5-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica27/orm-jpa-application-context.xml")
 @Transactional
 @Rollback(false)
 @DirtiesContext
 @ActiveProfiles("h2-in-memory") // h2-in-memory, h2-local, mysql
-public class CustomerDAOTest {
+public class UserDAOTest {
 
 	@Autowired
 	private IUserDAO userDAO;
@@ -33,10 +34,14 @@ public class CustomerDAOTest {
 	@Autowired
 	private ICustomerDAO customerDAO;
 
+	@Autowired
+	private IAccountDAO accountDAO;
+
 	@Before
 	public void setUp() {
 		Assert.assertNotNull(userDAO);
 		Assert.assertNotNull(customerDAO);
+		Assert.assertNotNull(accountDAO);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,7 +65,7 @@ public class CustomerDAOTest {
 
 		Customer customer = customerDAO.findById(newCustomer.getId());
 
-		Assert.assertEquals(newCustomer, customer);
+		Assert.assertEquals(customer, newCustomer);
 
 		log.info("customer : {} {}", customer, System.identityHashCode(customer));
 

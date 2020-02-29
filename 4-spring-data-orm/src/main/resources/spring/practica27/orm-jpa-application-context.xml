@@ -9,29 +9,35 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:component-scan
-		base-package="org.certificatic.spring.orm.practica27.dao.hibernate.impl" />
+		base-package="org.certificatic.spring.orm.practica27.dao.jpa.impl" />
 
 	<import
 		resource="classpath:/spring/practica27/datasource-application-context.xml" />
 
 	<!-- Define sessionFactory - LocalSessionFactoryBean -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<!-- org.springframework.orm.jpa.LocalEntityManagerFactoryBean -->
+	<!-- org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="datasource" />
 		<property name="packagesToScan" value="org.certificatic.spring.orm.practica27.domain.entities" />
-		<property name="hibernateProperties">
+		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">create</prop> <!-- validate | update | create | create-drop | none -->
 				<prop key="dialect">org.hibernate.dialect.H2Dialect</prop>
 			</props>
 		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		
 	</bean>
 
-	<!-- Define TransactionManager - HibernateTransactionManager -->
+	<!-- Define TransactionManager - JpaTransactionManager -->
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
 	<!-- Define transaccionabilidad dirigida por anotaciones -->

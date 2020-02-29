@@ -1,4 +1,4 @@
-package org.certificatic.spring.orm.practica27.test.dao.hibernate;
+package org.certificatic.spring.orm.practica27.test.dao.jpa;
 
 import org.certificatic.spring.orm.practica27.dao.api.ICustomerDAO;
 import org.certificatic.spring.orm.practica27.dao.api.IUserDAO;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/spring/practica27/orm-hibernate5-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica27/orm-jpa-application-context.xml")
 @Transactional
 @Rollback(false)
 @DirtiesContext
