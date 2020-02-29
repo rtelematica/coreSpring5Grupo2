@@ -14,8 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-		locations = "classpath:/spring/practica26/spring-tx-application-context.xml")
+@ContextConfiguration(locations = "classpath:/spring/practica26/spring-tx-application-context.xml")
+// @Transactional
+// @Rollback(false)
 public class DeclarativeXMLTransactionManagerTest {
 
 	@Autowired
@@ -35,9 +36,7 @@ public class DeclarativeXMLTransactionManagerTest {
 		try {
 			bo = transactionalService.getBusinessObject(5L);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.getBusinessObject(5L) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.getBusinessObject(5L) throws Exception {}", ex.getMessage());
 		}
 		log.info("getBusinessObject(5L): {}", bo);
 
@@ -47,9 +46,7 @@ public class DeclarativeXMLTransactionManagerTest {
 		try {
 			transactionalService.insertBusinessObject(null);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.insertBusinessObject(null) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.insertBusinessObject(null) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");
@@ -58,9 +55,7 @@ public class DeclarativeXMLTransactionManagerTest {
 		try {
 			transactionalService.updateBusinessObject(bo);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.updateBusinessObject(bo) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.updateBusinessObject(bo) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");
@@ -69,9 +64,7 @@ public class DeclarativeXMLTransactionManagerTest {
 		try {
 			transactionalService.deleteBusinessObject(5L);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.deleteBusinessObject(5L) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.deleteBusinessObject(5L) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");

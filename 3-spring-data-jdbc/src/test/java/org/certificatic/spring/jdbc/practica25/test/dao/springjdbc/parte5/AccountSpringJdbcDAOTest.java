@@ -47,6 +47,7 @@ public class AccountSpringJdbcDAOTest {
 		Account a = this.accountDAO.findById(50_000L);
 		
 		Assert.assertNull(a);
+		System.out.println("end test");
 	}
 
 	@Test

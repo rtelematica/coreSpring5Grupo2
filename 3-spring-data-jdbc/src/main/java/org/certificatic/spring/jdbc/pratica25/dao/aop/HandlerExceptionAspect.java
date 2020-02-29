@@ -19,6 +19,7 @@ public class HandlerExceptionAspect {
 		Object o = null;
 		
 		try {
+			System.out.println("this is an aspect");
 			o = pjp.proceed();
 
 		} catch (EmptyResultDataAccessException ex) {
