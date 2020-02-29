@@ -27,52 +27,60 @@ public class DeclarativeAnnotationsTransactionManagerTest {
 	}
 
 	@Test
-	public void declarativeAnnotationsTransactionManagerTest() {
-		log.info(
-				"declarativeAnnotationsTransactionManagerTest -------------------");
+	public void declarativeXMLTransactionManagerTest1() {
+		log.info("declarativeXMLTransactionManagerTest1 -------------------");
 
 		log.info("calling: transactionalService.getBusinessObject(5L)");
 		BusinessObject bo = null;
 		try {
 			bo = transactionalService.getBusinessObject(5L);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.getBusinessObject(5L) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.getBusinessObject(5L) throws Exception {}", ex.getMessage());
 		}
 		log.info("getBusinessObject(5L): {}", bo);
 
 		log.info("\n----------------------------------------------");
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest2() {
+		log.info("declarativeXMLTransactionManagerTest2 -------------------");
 
 		log.info("calling: transactionalService.insertBusinessObject(null)");
 		try {
 			transactionalService.insertBusinessObject(null);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.insertBusinessObject(null) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.insertBusinessObject(null) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");
+		
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest3() {
+		log.info("declarativeXMLTransactionManagerTest3 -------------------");
 
 		log.info("calling: transactionalService.updateBusinessObject(bo)");
+		BusinessObject bo = null;
 		try {
 			transactionalService.updateBusinessObject(bo);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.updateBusinessObject(bo) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.updateBusinessObject(bo) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest4() {
+		log.info("declarativeXMLTransactionManagerTest4 -------------------");
 
 		log.info("calling: transactionalService.deleteBusinessObject(5L)");
 		try {
 			transactionalService.deleteBusinessObject(5L);
 		} catch (Exception ex) {
-			log.info(
-					"transactionalService.deleteBusinessObject(5L) throws Exception {}",
-					ex.getMessage());
+			log.info("transactionalService.deleteBusinessObject(5L) throws Exception {}", ex.getMessage());
 		}
 
 		log.info("\n----------------------------------------------");

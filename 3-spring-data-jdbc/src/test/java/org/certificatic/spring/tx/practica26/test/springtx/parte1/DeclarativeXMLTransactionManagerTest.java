@@ -15,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring/practica26/spring-tx-application-context.xml")
-// @Transactional
-// @Rollback(false)
 public class DeclarativeXMLTransactionManagerTest {
 
 	@Autowired
@@ -28,8 +26,8 @@ public class DeclarativeXMLTransactionManagerTest {
 	}
 
 	@Test
-	public void declarativeXMLTransactionManagerTest() {
-		log.info("declarativeXMLTransactionManagerTest -------------------");
+	public void declarativeXMLTransactionManagerTest1() {
+		log.info("declarativeXMLTransactionManagerTest1 -------------------");
 
 		log.info("calling: transactionalService.getBusinessObject(5L)");
 		BusinessObject bo = null;
@@ -41,6 +39,11 @@ public class DeclarativeXMLTransactionManagerTest {
 		log.info("getBusinessObject(5L): {}", bo);
 
 		log.info("\n----------------------------------------------");
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest2() {
+		log.info("declarativeXMLTransactionManagerTest2 -------------------");
 
 		log.info("calling: transactionalService.insertBusinessObject(null)");
 		try {
@@ -50,8 +53,15 @@ public class DeclarativeXMLTransactionManagerTest {
 		}
 
 		log.info("\n----------------------------------------------");
+		
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest3() {
+		log.info("declarativeXMLTransactionManagerTest3 -------------------");
 
 		log.info("calling: transactionalService.updateBusinessObject(bo)");
+		BusinessObject bo = null;
 		try {
 			transactionalService.updateBusinessObject(bo);
 		} catch (Exception ex) {
@@ -59,6 +69,11 @@ public class DeclarativeXMLTransactionManagerTest {
 		}
 
 		log.info("\n----------------------------------------------");
+	}
+	
+	@Test
+	public void declarativeXMLTransactionManagerTest4() {
+		log.info("declarativeXMLTransactionManagerTest4 -------------------");
 
 		log.info("calling: transactionalService.deleteBusinessObject(5L)");
 		try {

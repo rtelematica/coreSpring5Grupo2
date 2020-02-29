@@ -13,8 +13,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-// Habilitar Transaction Managemer
-@EnableTransactionManagement(order = 100)
+// Habilitar Transaction Management
+@EnableTransactionManagement(order=100)
 // Habilitar AspectJ AutoProxy
 @EnableAspectJAutoProxy
 @ComponentScan({ "org.certificatic.spring.tx.pratica26",
@@ -24,8 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class TransactionalAnnotationAppConfiguration {
 
 	@Bean
-	public PlatformTransactionManager transactionManager(
-			DataSource datasource) {
+	public PlatformTransactionManager transactionManager(DataSource datasource) {
 		DataSourceTransactionManager dstm = new DataSourceTransactionManager();
 		dstm.setDataSource(datasource);
 		return dstm;
