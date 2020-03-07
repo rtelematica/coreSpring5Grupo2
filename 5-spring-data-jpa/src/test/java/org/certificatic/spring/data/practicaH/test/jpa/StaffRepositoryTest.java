@@ -35,7 +35,7 @@ public class StaffRepositoryTest {
 		log.info("queryStaffCrudExample test starts =======================================================");
 
 		System.out.println("\n*************@Query Staff Example*************");
-		List<Staff> staff = null; // busca un Staff por nombre completo (JPQL)
+		List<Staff> staff = staffRepository.selectStaffByFullname("Allison", "Moore"); // busca un Staff por nombre completo (JPQL)
 
 		Assert.assertEquals(1, staff.size());
 
@@ -44,7 +44,7 @@ public class StaffRepositoryTest {
 		System.out.println();
 		
 		System.out.println("\n*************Native @Query implementation Staff Example*************");
-		List<Staff> staff2 = null; // busca un Staff por nombre completo (SQL nativo)
+		List<Staff> staff2 = staffRepository.selectNativeStaffByFullname("Allison", "Moore"); // busca un Staff por nombre completo (SQL nativo)
 
 		Assert.assertEquals(1, staff2.size());
 
@@ -53,13 +53,13 @@ public class StaffRepositoryTest {
 		System.out.println();
 		
 		System.out.println("\n*************Custom query implementation Staff Example*************");
-		List<Staff> staff3 = null; // busca un Staff por nombre completo usando el metodo customizado buscaStaffPorNombreCompleto
+		List<Staff> staff3 = staffRepository.buscaStaffPorNombreCompletoJPQL("Moore", "Allison"); // busca un Staff por nombre completo usando el metodo customizado buscaStaffPorNombreCompleto
 
 		Assert.assertEquals(1, staff3.size());
 
 		staff3.forEach(System.out::println);
 		
-		List<Staff> staff4 = null; // busca un Staff por nombre completo usando el metodo customizado buscaStaffPorNombreCompletoUsandoConsultaNativa
+		List<Staff> staff4 = staffRepository.buscaStaffPorNombreCompletoSQL("Moore", "Allison"); // busca un Staff por nombre completo usando el metodo customizado buscaStaffPorNombreCompletoUsandoConsultaNativa
 
 		Assert.assertEquals(1, staff4.size());
 

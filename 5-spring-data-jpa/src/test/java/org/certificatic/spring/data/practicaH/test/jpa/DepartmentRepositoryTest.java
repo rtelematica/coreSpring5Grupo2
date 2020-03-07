@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 
+// 2
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
@@ -35,21 +36,25 @@ public class DepartmentRepositoryTest {
 		log.info("simpleDepartmentCrudExample test starts =======================================================");
 
 		// guarda el departamento "Humanities"
+		departmentRepository.save(new Department("Humanities"));
 		
 		// ejecuta flush de la sesion 
+		departmentRepository.flush();
 		
 		// guarda el departamento "Fine Arts" y haz flush en una sola operacion
+		departmentRepository.saveAndFlush(new Department("Fine Arts"));
 
 		// guarda el departamento "Social Science"
+		departmentRepository.saveAndFlush(new Department("Social Science"));
 
 		System.out.println("\n*************3 Departments*************");
-		List<Department> departments = null; // busca todos los departamentos
+		List<Department> departments = departmentRepository.findAll(); // busca todos los departamentos
 
 		Assert.assertEquals(3, departments.size());
 
 		departments.forEach(System.out::println);
 
-		List<Department> reloadedDepartments = null; // busca todos los departamentos otra vez
+		List<Department> reloadedDepartments = departmentRepository.findAll(); // busca todos los departamentos otra vez
 
 		Assert.assertEquals(3, reloadedDepartments.size());
 
@@ -60,18 +65,20 @@ public class DepartmentRepositoryTest {
 		Assert.assertEquals("Humanities", listToDelete.get(0).getName());
 
 		// elimina en batch los departamentos listToDelete
+		departmentRepository.deleteInBatch(listToDelete);
 
 		System.out.println("\n*************1 Less Departments*************");
-		List<Department> _1_lessDepartments = null; // busca todos los departamentos otra vez
+		List<Department> _1_lessDepartments = departmentRepository.findAll(); // busca todos los departamentos otra vez
 
 		Assert.assertEquals(2, _1_lessDepartments.size());
 
 		_1_lessDepartments.forEach(System.out::println);
 
 		// borra todos los departamentos en batch
+		departmentRepository.deleteAllInBatch();
 
 		System.out.println("\n*************Zero Departments*************");
-		List<Department> zeroDepartments = null; // busca todos los departamentos otra vez
+		List<Department> zeroDepartments = departmentRepository.findAll(); // busca todos los departamentos otra vez
 
 		Assert.assertEquals(0, zeroDepartments.size());
 

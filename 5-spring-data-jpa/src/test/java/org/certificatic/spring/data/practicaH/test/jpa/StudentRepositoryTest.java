@@ -53,24 +53,28 @@ public class StudentRepositoryTest {
 		log.info("simpleStudentCrudExample test starts =======================================================");
 		
 		// Staff
-		Staff deanJones = null; // almacena el Staff createStaffJohnJones
-		Staff profBlack = null; // almacena el Staff createStaffJackBlack
+		Staff deanJones = staffRepository.save(createStaffJohnJones()); // almacena el Staff createStaffJohnJones
+		Staff profBlack = staffRepository.save(createStaffJackBlack()); // almacena al StaffJackBlack
 
 		// Departments
-		Department humanities = null; // almacena el Departamento createDepartmentHumanities con deanJones como jefe de depto
+		Department humanities = departmentRepository.save(
+				createDepartmentHumanities(deanJones)); // almacena al DepartmentHumanities con deanJones como jefe de depto
 
-		Course english101 = null; // almacena el Curso createCourseEnglish101 con profBlack como profesor del depto humanities
-		Course english202 = null; // almacena el Curso createCourseEnglish202 con profBlack como profesor del depto humanities
+		Course english101 = courseRepository.save(
+				createCourseEnglish101(profBlack, humanities)); // almacena al CourseEnglish101 con profBlack como profesor del depto humanities
+		Course english202 = courseRepository.save(
+				createCourseEnglish202(profBlack, humanities)); // almacena al CourseEnglish202 con profBlack como profesor del depto humanities
 
 		boolean fullTime = true;
 
-		// almacena janeDoe dos veces
-		// almacena johnDoe
-		// almacena mikeSmith
-		// almacena allyKim
+		studentRepository.save(janeDoe(fullTime));
+		studentRepository.save(janeDoe(fullTime)); // almacena janeDoe dos veces
+		Student jonhDoe = studentRepository.save(johnDoe(fullTime)); // almacena johnDoe
+		studentRepository.save(mikeSmith(fullTime));// almacena mikeSmith
+		studentRepository.save(allyKim(fullTime));// almacena allyKim
 
 		System.out.println("\n*************Original Students*************");
-		List<Student> students = null; // busca todos los Student
+		List<Student> students = studentRepository.findAll(); // busca todos los Student
 		
 		Assert.assertEquals(5, students.size());
 		
@@ -78,12 +82,15 @@ public class StudentRepositoryTest {
 		
 		// age up the students
 		@SuppressWarnings("unused")
-		List<Student> studentsAltered = null; // busca todos los Student y modificalos,
-											  // sumales un anio a su edad y actualizalos en bd.
-											  // opera todo en un Stream.
+		List<Student> studentsAltered = studentRepository.findAll()
+							.stream() // busca todos los Student y modificalos,
+							.peek(s -> s.setBirthday(s.getBirthday().minusYears(1))) // sumales un anio a su edad y actualizalos en bd.
+							//.peek(s -> studentRepository.save(s))// opera todo en un Stream.
+							.peek(studentRepository::save)// opera todo en un Stream.
+							.collect(Collectors.toList());
 
 		System.out.println("\n*************Students a year older*************");
-		List<Student> studentsYearOlder = null; // busca todos los Student
+		List<Student> studentsYearOlder = studentRepository.findAll(); // busca todos los Student
 		
 		Assert.assertEquals(5, studentsYearOlder.size());
 		
@@ -91,30 +98,42 @@ public class StudentRepositoryTest {
 
 		System.out.println("\n*************Distinct doe lastname Students*************");
 
-		List<Student> doeStudents = null; // busca los distintos Student por attendeeLastName
+		List<Student> doeStudents = studentRepository.findDistinctByAttendeeLastNameIgnoreCase("Doe"); // busca los distintos Student por attendeeLastName
 
+		Assert.assertEquals(3, doeStudents.size());
+		
 		doeStudents.forEach(System.out::println);
 
 		System.out.println(
 				"\n*************doe lastname Students enrolled in courses English 101 and English 202*************");
 
 		// Al alumno jonhDoe enrolar los cursos english101 y english202. almacenar los cambios
+		jonhDoe.getCourses().add(english101);
+		jonhDoe.getCourses().add(english202);
+		studentRepository.save(jonhDoe);
 
-		List<Student> doeStudentsEnrolled = null; // buscar los Student enrolados por nombre de los cursos (lista)
+		List<Student> doeStudentsEnrolled = studentRepository
+				.findByCoursesNameIn(Arrays.asList("English 101", "English 202")); // buscar los Student enrolados por nombre de los cursos (lista)
 
+		Assert.assertEquals(2, doeStudentsEnrolled.size());
+		
 		doeStudentsEnrolled.forEach(System.out::println);
 
 		System.out.println(
 				"\n*************Distinct doe lastname Students enrolled in courses English 101 and English 202*************");
 
-		List<Student> distinctDoeStudentsEnrolled = null; // buscar los Student (distintos) enrolados por nombre de los cursos (lista)
+		List<Student> distinctDoeStudentsEnrolled = studentRepository
+				.findDistinctByCoursesNameIn(Arrays.asList("English 101", "English 202")); // buscar los Student (distintos) enrolados por nombre de los cursos (lista)
 
+		Assert.assertEquals(1, distinctDoeStudentsEnrolled.size());
+		
 		distinctDoeStudentsEnrolled.forEach(System.out::println);
 		
 		// borra todos los Student
+		studentRepository.deleteAll();
 		
 		System.out.println("\n*************Students removed*************");
-		List<Student> deletedStudents = null; // busca todos los Student
+		List<Student> deletedStudents = studentRepository.findAll(); // busca todos los Student
 		
 		Assert.assertEquals(0, deletedStudents.size());
 		

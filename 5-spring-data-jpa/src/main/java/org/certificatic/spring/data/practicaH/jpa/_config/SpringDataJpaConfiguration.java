@@ -71,7 +71,7 @@ public class SpringDataJpaConfiguration {
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-		properties.setProperty("hibernate.show_sql", "true");
+		// properties.setProperty("hibernate.show_sql", "true");
 		// properties.setProperty("hibernate.format_sql", "true");
 		// properties.setProperty("hibernate.use_sql_comments", "true");
 		
@@ -141,6 +141,7 @@ public class SpringDataJpaConfiguration {
 				Staff profGreen = staffRepository.save(createStaffGrahamGreen()); // almacena al StaffGrahamGreen
 				Staff profWhite = staffRepository.save(createStaffWhitneyWhite()); // almacena al StaffWhitneyWhite
 				Staff profBlack = staffRepository.save(createStaffJackBlack()); // almacena al StaffJackBlack
+				Staff profBlack2 = staffRepository.save(createStaffJackyBlack()); // almacena al StaffJackBlack
 				Staff profKing = staffRepository.save(createStaffQueenKing()); // almacena al StaffQueenKing
 
 				// Departments
@@ -261,6 +262,10 @@ public class SpringDataJpaConfiguration {
 
 			private Staff createStaffJackBlack() {
 				return new Staff(new Person("Jack", "Black"));
+			}
+			
+			private Staff createStaffJackyBlack() {
+				return new Staff(new Person("Jacky", "Black"));
 			}
 
 			private Staff createStaffWhitneyWhite() {

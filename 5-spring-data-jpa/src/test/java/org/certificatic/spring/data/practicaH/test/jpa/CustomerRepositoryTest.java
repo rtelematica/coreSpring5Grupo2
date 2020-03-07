@@ -41,7 +41,7 @@ public class CustomerRepositoryTest {
 		newCustomer.setBirthday(LocalDate.of(1987, 06, 23));
 		newCustomer.setFullName("Ivan Garcia");
 
-		Customer savedCustomer = null; // almacena newCustomer
+		Customer savedCustomer = customerRepository.save(newCustomer); // almacena newCustomer
 
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.notNullValue());
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.equalTo(1L));
@@ -52,7 +52,7 @@ public class CustomerRepositoryTest {
 		log.info("saved customer " + savedCustomer);
 		log.info("saved customer is same instance than new customer: " + (savedCustomer == newCustomer));
 
-		Optional<Customer> reloadedOptionalCustomer = null; // busca por Id el savedCustomer
+		Optional<Customer> reloadedOptionalCustomer = customerRepository.findById(savedCustomer.getId()); // busca por Id el savedCustomer
 
 		Assert.assertThat(reloadedOptionalCustomer.isPresent(), CoreMatchers.equalTo(true));
 
@@ -82,7 +82,7 @@ public class CustomerRepositoryTest {
 		newCustomer.setBirthday(LocalDate.of(1987, 06, 23));
 		newCustomer.setFullName("Ivan Garcia");
 
-		Customer savedCustomer = null; // almacena newCustomer
+		Customer savedCustomer = customerRepository.save(newCustomer); // almacena newCustomer
 
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.notNullValue());
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.equalTo(1L));
@@ -97,7 +97,7 @@ public class CustomerRepositoryTest {
 		savedCustomer.setFullName("Ivan Venor Garcia");
 		savedCustomer.setBirthday(LocalDate.of(1990, 01, 04));
 
-		Customer updatedCustomer = null; // actualiza el savedCustomer
+		Customer updatedCustomer = customerRepository.save(savedCustomer); // actualiza el savedCustomer
 
 		Assert.assertThat(updatedCustomer.getId(), CoreMatchers.notNullValue());
 		Assert.assertThat(updatedCustomer.getId(), CoreMatchers.equalTo(1L));
@@ -111,7 +111,7 @@ public class CustomerRepositoryTest {
 		log.info("updated customer is same instance than new customer: " + (updatedCustomer == newCustomer));
 		log.info("updated customer is same instance than saved customer: " + (updatedCustomer == savedCustomer));
 
-		Optional<Customer> reloadedOptionalCustomer = null; // busca por Id el updatedCustomer 
+		Optional<Customer> reloadedOptionalCustomer = customerRepository.findById(updatedCustomer.getId()); // busca por Id el updatedCustomer 
 
 		Assert.assertThat(reloadedOptionalCustomer.isPresent(), CoreMatchers.equalTo(true));
 
@@ -139,7 +139,7 @@ public class CustomerRepositoryTest {
 		newCustomer.setBirthday(LocalDate.of(1987, 06, 23));
 		newCustomer.setFullName("Ivan Garcia");
 
-		Customer savedCustomer = null; // almacena newCustomer
+		Customer savedCustomer = customerRepository.save(newCustomer); // almacena newCustomer
 
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.notNullValue());
 		Assert.assertThat(savedCustomer.getId(), CoreMatchers.equalTo(1L));
@@ -151,8 +151,9 @@ public class CustomerRepositoryTest {
 		log.info("saved customer is same instance than new customer: " + (savedCustomer == newCustomer));
 
 		// elimina savedCustomer
+		customerRepository.delete(savedCustomer);
 
-		Optional<Customer> reloadedOptionalCustomer = null; // busca por Id el savedCustomer
+		Optional<Customer> reloadedOptionalCustomer = customerRepository.findById(savedCustomer.getId()); // busca por Id el savedCustomer
 
 		Assert.assertThat(reloadedOptionalCustomer.isPresent(), CoreMatchers.equalTo(false));
 
@@ -175,7 +176,7 @@ public class CustomerRepositoryTest {
 			newCustomer.setBirthday(LocalDate.of(1987, 06, 23));
 			newCustomer.setFullName("Ivan Garcia " + i);
 
-			Customer savedCustomer = null; // almacena newCustomer
+			Customer savedCustomer = customerRepository.save(newCustomer); // almacena newCustomer
 
 			Assert.assertThat(savedCustomer.getId(), CoreMatchers.notNullValue());
 			Assert.assertThat(savedCustomer.getId(), CoreMatchers.equalTo(Long.valueOf(i)));
@@ -195,10 +196,10 @@ public class CustomerRepositoryTest {
 			customersToSave.add(newCustomer);
 		}
 
-		List<Customer> savedCustomers = null; // almacena de un golpe (batch) todos los customersToSave
+		List<Customer> savedCustomers = customerRepository.saveAll(customersToSave); // almacena de un golpe (batch) todos los customersToSave
 		savedCustomers.forEach(c -> log.info("saved customer " + c));
 
-		List<Customer> customers = null; // busca todos los customer
+		List<Customer> customers = customerRepository.findAll(); // busca todos los customer
 		System.out.println(customers.size());
 
 		long customersSize = StreamSupport.stream(customers.spliterator(), false).count();
@@ -225,8 +226,9 @@ public class CustomerRepositoryTest {
 		}
 
 		// almacena de un golpe (batch) todos los customersToSave
+		customerRepository.saveAll(customersToSave);
 
-		Iterable<Customer> customers = null; // busca todos los customer
+		Iterable<Customer> customers = customerRepository.findAll(); // busca todos los customer
 
 		long customersSize = StreamSupport.stream(customers.spliterator(), false).count();
 
@@ -235,8 +237,9 @@ public class CustomerRepositoryTest {
 		customers.forEach(c -> log.info(c.toString()));
 
 		// borra todos los customer
+		customerRepository.deleteAll();
 
-		Iterable<Customer> reloadedCustomers = null; // busca todos los customer
+		Iterable<Customer> reloadedCustomers = customerRepository.findAll(); // busca todos los customer
 
 		long reloadedCustomersSize = StreamSupport.stream(reloadedCustomers.spliterator(), false).count();
 

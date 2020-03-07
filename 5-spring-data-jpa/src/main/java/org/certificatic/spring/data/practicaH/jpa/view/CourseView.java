@@ -5,10 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CourseView {
 	private String name;
-	private String instructorLastName;
+	private String instructorFullName;
 	private String deptName;
+
+	public CourseView() {
+	}
+
+	public CourseView(String name, String instructorFirstName, 
+					  String instructorLastName, String deptName) {
+		super();
+		this.name = name;
+		this.instructorFullName = instructorFirstName + " " + instructorLastName;
+		this.deptName = deptName;
+	}
+
 }
