@@ -25,11 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 @ContextConfiguration(classes = SpringDataJpaConfiguration.class)
 public class CourseRepositoryTest {
 
-	@Autowired
-	private CourseRepository courseRepository;
+	//@Autowired
+	//private CourseRepository courseRepository;
 
-	@Autowired
-	private StaffRepository staffRepository;
+	//@Autowired
+	//private StaffRepository staffRepository;
 
 	@Test
 	public void courseExample() {

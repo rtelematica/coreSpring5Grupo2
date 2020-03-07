@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
 import org.certificatic.spring.data.practicaH.jpa.entity.Course;
@@ -35,15 +36,34 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 // Clase de configuración @Configuration
 @Configuration
 // Component Scan de paquete base Spring data practicaH JPA
-@ComponentScan(basePackages = "org.certificatic.spring.data.practicaH.jpa")
+@ComponentScan(basePackages = 
+		"org.certificatic.spring.data.practicaH.jpa")
 
 // Habilitar repositorios Spring Data JPA
+@EnableJpaRepositories(basePackages = 
+		"org.certificatic.spring.data.practicaH.jpa.repositories")
 
 // Opcional habilitar manejo transaccional
-
+@EnableTransactionManagement
 public class SpringDataJpaConfiguration {
 	
 	// Definir Bean LocalContainerEntityManagerFactoryBean
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
+		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		
+		em.setDataSource(ds);
+		em.setPackagesToScan("org.certificatic.spring.data.practicaH.jpa.entity");
+		em.setJpaProperties(additionalProperties());
+		em.setJpaVendorAdapter(jpaVendorAdapter());
+		
+		return em;
+	}
+	
+	@Bean
+	public JpaVendorAdapter jpaVendorAdapter() {
+		return new HibernateJpaVendorAdapter();
+	}
 	
 	// Analiza las entidades definidas
 
@@ -51,7 +71,7 @@ public class SpringDataJpaConfiguration {
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-		// properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.show_sql", "true");
 		// properties.setProperty("hibernate.format_sql", "true");
 		// properties.setProperty("hibernate.use_sql_comments", "true");
 		
@@ -62,6 +82,11 @@ public class SpringDataJpaConfiguration {
 	}
 
 	// Opcional, definir Bean PlatformTransactionManager del tipo JpaTransactionManager
+	@Bean
+	public PlatformTransactionManager 
+							transactionManager(EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
+	}
 
 	// DAO Support, Translacion de excepciones
 	@Bean
@@ -70,13 +95,23 @@ public class SpringDataJpaConfiguration {
 	}
 	
 	// Define Bean DataSource en memoria mediante EmbeddedDatabaseBuilder
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+				.generateUniqueName(true)
+				.setType(EmbeddedDatabaseType.H2)
+				//.addScript("classpath:/myscript.sql")
+				.build();
+	}
 
 	// Analiza
 	@Bean
 	@Profile("init-database")
-	public ApplicationListener<ContextRefreshedEvent> startupBean(StudentRepository studentRepository,
-			StaffRepository staffRepository, CourseRepository courseRepository,
-			DepartmentRepository departmentRepository) {
+	public ApplicationListener<ContextRefreshedEvent> startupBean(
+			StudentRepository studentRepository/*,
+			StaffRepository staffRepository, 
+			CourseRepository courseRepository,
+			DepartmentRepository departmentRepository*/) {
 
 		return new ApplicationListener<ContextRefreshedEvent>() {
 
@@ -88,6 +123,8 @@ public class SpringDataJpaConfiguration {
 				boolean fullTime = true;
 				
 				// almacena los estudiantes
+				Student janeDoe = createStudentJaneDoe(fullTime);
+				studentRepository.save(janeDoe);
 
 				// Staff
 				Staff deanJones = null; // almacena al StaffJohnJones

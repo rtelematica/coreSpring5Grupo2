@@ -8,7 +8,7 @@ import org.certificatic.spring.data.practicaH.jpa.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // Extiende de JpaRepository
-public interface StudentRepository {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
 	// Define los metodos conforme la practica lo requiera (guiado por instructor)
 	
