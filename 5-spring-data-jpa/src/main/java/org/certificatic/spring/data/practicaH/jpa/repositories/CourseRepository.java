@@ -12,7 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 // Extiende de CrudRepository
-public interface CourseRepository {
+public interface CourseRepository extends CrudRepository<Course, Long> {
 
 	// Define los metodos conforme la practica lo requiera (guiado por instructor)
 

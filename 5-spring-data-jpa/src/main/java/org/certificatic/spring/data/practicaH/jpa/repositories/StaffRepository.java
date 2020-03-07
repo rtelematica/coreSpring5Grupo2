@@ -8,7 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 // Extiende de PagingAndSortingRepository, despues extiende de StaffCustomRepository
-public interface StaffRepository {
+public interface StaffRepository extends PagingAndSortingRepository<Staff, Long> {
 
 	// Define los metodos conforme la practica lo requiera (guiado por instructor)
 	

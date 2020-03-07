@@ -108,10 +108,10 @@ public class SpringDataJpaConfiguration {
 	@Bean
 	@Profile("init-database")
 	public ApplicationListener<ContextRefreshedEvent> startupBean(
-			StudentRepository studentRepository/*,
+			StudentRepository studentRepository,
 			StaffRepository staffRepository, 
 			CourseRepository courseRepository,
-			DepartmentRepository departmentRepository*/) {
+			DepartmentRepository departmentRepository) {
 
 		return new ApplicationListener<ContextRefreshedEvent>() {
 
@@ -123,60 +123,79 @@ public class SpringDataJpaConfiguration {
 				boolean fullTime = true;
 				
 				// almacena los estudiantes
-				Student janeDoe = createStudentJaneDoe(fullTime);
-				studentRepository.save(janeDoe);
+				studentRepository.save(createStudentJaneDoe(fullTime));
+				studentRepository.save(createStudentYulianaDoe(fullTime));
+				studentRepository.save(createStudentKarlaJimenez(fullTime));
+				studentRepository.save(createStudentJohnDoe(fullTime));
+				studentRepository.save(createStudentMikeSmith(fullTime));
+				studentRepository.save(createStudentAllyKim(fullTime));
 
 				// Staff
-				Staff deanJones = null; // almacena al StaffJohnJones
-				Staff deanMartin = null; // almacena al StaffMatthewMartin
-				Staff profBrown = null; // almacena al StaffJamesBrown
-				Staff profMiller = null; // almacena al StaffJudyMiller
-				Staff profDavis = null; // almacena al StaffJamesDavis
-				Staff profMoore = null; // almacena al StaffAllisonMoore
-				Staff profThomas = null; // almacena al StaffTomThomas
-				Staff profGreen = null; // almacena al StaffGrahamGreen
-				Staff profWhite = null; // almacena al StaffWhitneyWhite
-				Staff profBlack = null; // almacena al StaffJackBlack
-				Staff profKing = null; // almacena al StaffQueenKing
+				Staff deanJones = staffRepository.save(createStaffJohnJones()); // almacena al StaffJohnJones
+				Staff deanMartin = staffRepository.save(createStaffMatthewMartin()); // almacena al StaffMatthewMartin
+				Staff profBrown = staffRepository.save(createStaffJamesBrown()); // almacena al StaffJamesBrown
+				Staff profMiller = staffRepository.save(createStaffJudyMiller()); // almacena al StaffJudyMiller
+				Staff profDavis = staffRepository.save(createStaffJamesDavis()); // almacena al StaffJamesDavis
+				Staff profMoore = staffRepository.save(createStaffAllisonMoore()); // almacena al StaffAllisonMoore
+				Staff profThomas = staffRepository.save(createStaffTomThomas()); // almacena al StaffTomThomas
+				Staff profGreen = staffRepository.save(createStaffGrahamGreen()); // almacena al StaffGrahamGreen
+				Staff profWhite = staffRepository.save(createStaffWhitneyWhite()); // almacena al StaffWhitneyWhite
+				Staff profBlack = staffRepository.save(createStaffJackBlack()); // almacena al StaffJackBlack
+				Staff profKing = staffRepository.save(createStaffQueenKing()); // almacena al StaffQueenKing
 
 				// Departments
-				Department humanities = null; // almacena al DepartmentHumanities con deanJones como jefe de depto
-				Department naturalSciences = null; // almacena al DepartmentNaturalSciences como deanMartin como jefe de depto
-				Department socialSciences = null; // almacena al DepartmentSocialSciencescomo deanJones como jefe de depto
+				Department humanities = departmentRepository.save(createDepartmentHumanities(deanJones)); // almacena al DepartmentHumanities con deanJones como jefe de depto
+				Department naturalSciences = departmentRepository.save(createDepartmentNaturalSciences(deanMartin)); // almacena al DepartmentNaturalSciences como deanMartin como jefe de depto
+				Department socialSciences = departmentRepository.save(createDepartmentSocialSciences(deanJones)); // almacena al DepartmentSocialSciencescomo deanJones como jefe de depto
 
 				// Humanities Courses
-				Course english101 = null; // almacena al CourseEnglish101 con profBlack como profesor del depto humanities
-				Course english202 = null; // almacena al CourseEnglish202 con profBlack como profesor del depto humanities
+				Course english101 = courseRepository.save(createCourseEnglish101(profBlack, humanities)); // almacena al CourseEnglish101 con profBlack como profesor del depto humanities
+				Course english202 = courseRepository.save(createCourseEnglish202(profBlack, humanities)); // almacena al CourseEnglish202 con profBlack como profesor del depto humanities
 				
 				// agrega el curso english101 como prerequisito del curso english202
+				courseRepository.save(english202.addPrerequisite(english101));
 				
-				Course english201 = null; // almacena al CourseEnglish201 con profBrown como profesor del depto humanities
+				Course english201 = courseRepository.save(createCourseEnglish201(profBrown, humanities)); // almacena al CourseEnglish201 con profBrown como profesor del depto humanities
 				
 				// agrega el curso english101 como prerequisito del curso english201
+				courseRepository.save(english201.addPrerequisite(english101));
 				
 
 				// Natural Science Courses
-				Course chemistry = null; // almacena al CourseChemistry con profDavis como profesor del depto  naturalSciences
-				Course physics = null; // almacena al CoursePhysics con profDavis como profesor del depto naturalSciences
+				Course chemistry = courseRepository.save(
+						createCourseChemistry(profDavis, naturalSciences)); // almacena al CourseChemistry con profDavis como profesor del depto  naturalSciences
+				Course physics = courseRepository.save(
+						createCoursePhysics(profDavis, naturalSciences)); // almacena al CoursePhysics con profDavis como profesor del depto naturalSciences
 				
 				// agrega el curso chemistry como prerequisito del curso physcics
+				courseRepository.save(physics.addPrerequisite(chemistry));
 				
-				Course cProgramming = null; // almacena al CourseCProgramming con profMoore como profesor del depto naturalSciences
-				Course jProgramming = null; // almacena al CourseJavaProgramming con profMoore como profesor del depto naturalSciences
+				Course cProgramming = courseRepository.save(
+						createCourseCProgramming(profMoore, naturalSciences)); // almacena al CourseCProgramming con profMoore como profesor del depto naturalSciences
+				Course jProgramming = courseRepository.save(
+						createCourseJavaProgramming(profMoore, naturalSciences)); // almacena al CourseJavaProgramming con profMoore como profesor del depto naturalSciences
 
 				// Social Science Courses
-				Course history101 = null; // almacena al CourseHistory101 con profMiller como profesor del depto socialSciences
-				Course anthro = null; // almacena al CourseAnthropology con profKing como profesor del depto socialSciences
+				Course history101 = courseRepository.save(
+						createCourseHistory101(profMiller, socialSciences)); // almacena al CourseHistory101 con profMiller como profesor del depto socialSciences
+				Course anthro = courseRepository.save(
+						createCourseAnthropology(profKing, socialSciences)); // almacena al CourseAnthropology con profKing como profesor del depto socialSciences
 				
 				// agrega el curso history101 como prerequisito del curso anthropology
+				courseRepository.save(anthro.addPrerequisite(history101));
 				
-				Course sociology = null; // almacena al CourseSociology con profKing como profesor del depto socialSciences
+				Course sociology = courseRepository.save(
+						createCourseSociology(profKing, socialSciences)); // almacena al CourseSociology con profKing como profesor del depto socialSciences
 				
 				// agrega el curso history101 como prerequisito del curso sociology
+				courseRepository.save(sociology.addPrerequisite(history101));
 				
-				Course psych = null; // almacena al CoursePsychology con profWhite como profesor del depto socialSciences
+				Course psych = courseRepository.save(
+						createCoursePsychology(profWhite, socialSciences)); // almacena al CoursePsychology con profWhite como profesor del depto socialSciences
 				
 				// agrega el curso history101 y el curso english101 como prerequisitos del curso psychology
+				courseRepository.save(psych.addPrerequisite(history101)
+										   .addPrerequisite(english101));
 
 			}
 
