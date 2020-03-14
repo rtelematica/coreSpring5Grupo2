@@ -1,5 +1,7 @@
 package org.certificatic.spring.data.practicaI.test.mongodb.demo;
 
+import java.util.Optional;
+
 import org.certificatic.spring.data.practicaI.mongodb._config.SpringDataMongodbConfiguration;
 import org.certificatic.spring.data.practicaI.mongodb.document.Staff;
 import org.certificatic.spring.data.practicaI.mongodb.repositories.DepartmentRepository;
@@ -75,50 +77,83 @@ public class SpringDataMongodbDemosTest {
 		}
 
 		System.out.println("\nFind first 3 Staff members, sort alphabetically by last name using PageRequest");
-		Page<Staff> members = null; // busca la primera pagina de tamanio 3 de todos los Staff en el repositorio, utiliza la variable Sort "sortByLastName" para ordenarlos.
+		Page<Staff> members = staffRepository.findAll(
+									PageRequest.of(0, 3, sortByLastName)); // busca la primera pagina de tamanio 3 de todos los Staff en el repositorio, utiliza la variable Sort "sortByLastName" para ordenarlos.
 		members.forEach(System.out::println);
 
 		// Property Expression
 		System.out.println("\nFind all staff members with last name King");
 		// busca los Staff con "member.lastName" igual a "King"
+		staffRepository.findByMemberLastName("King")
+									.forEach(System.out::println);
 
 		// @Query with JSON query string
 		// "{ 'member.firstName' : ?0 }"
 		System.out.println("\nFind all staff members with first name John");
 		// busca los Staff por "firstName" igual a "John", utiliza @Query para definir una consulta nativa MongoDB.
+		staffRepository.findByMemberFirstName("John")
+							.forEach(System.out::println);
+		System.out.println();
+		staffRepository.findStaffByFirstPersonName("John")
+							.forEach(System.out::println);
 
 		// ***************Department query methods***************
 
 		// Sorting example, MongoRepository extends PagingAndSortingRepository
 		System.out.println("\nFind all Departments, sort alphabetically by name Descending");
 		// busca todos los departamentos, ordenalos definiendo un Sort por "name" descendientemente.
+		departmentRepository.findAll(Sort.by(Direction.DESC, "name"))
+							.forEach(System.out::println);
 
 		// Property Expression
 		System.out.println("\nFind Department with the exact name 'Humanities' \n"
-				+ null); // busca el departamento por "name" igual a "Humanities".
+				+ departmentRepository.findByName("Humanities")); // busca el departamento por "name" igual a "Humanities".
 
 		// @Query with JSON query string that accepts regular expression as a parameter
 		// { 'name' : { $regex: ?0 } }
 		// Any department name that ends in sciences where 's' is case insensitive
 		System.out.println("\nFind all Departments with name ending in Sciences");
 		// busca todos los Department donde el "name" termine con "sciences" (case-insensitive), usa @Query methods
+		departmentRepository.findByPattern(".[sS]ciences")
+							.forEach(System.out::println);
+		
+		System.out.println();
 		
 		// busca todos los Department donde el "name" termine con "sciences" (case-insensitive), usa derived queries
+		departmentRepository.findByNameEndingWithIgnoreCase("sciences")
+							.forEach(System.out::println);
 		
 
 		try {
 			// Invalid Method, will fail at runtime
 			System.out.println("\nInvalid Method, cannot cross DBRef's in queries");
 			// Intenta buscar los Department por Chair Member LastName igual a "Jones", utiliza derived queries.
+			departmentRepository.findByChairMemberLastName("Jones")
+							.forEach(System.out::println);
 			
 
-			//Assert.fail("Should fail at this point");
+			Assert.fail("Should fail at this point");
 
 		} catch (MappingException ex) {
 			System.out.println("exception: " + ex.getMessage());
 		}
 		
 		// Logra hacer la consulta de los Department por Chair Member LastName igual a "Jones", utiliza custom repositories.
+		Optional<Staff> jonesOptional = staffRepository.findByMemberLastName("Jones")
+			.stream()
+			.findFirst();
+		
+		if(jonesOptional.isPresent()) {
+			Integer jonesId = jonesOptional.get().getId();
+			
+			departmentRepository.findByChairId(jonesId)
+				.forEach(System.out::println);
+		}
+		
+		System.out.println();
+		
+		departmentRepository.getDepartmentByChairLastName("Jones")
+							.forEach(System.out::println);
 
 		log.info("mongoQueryMethods test ends =======================================================");
 	}

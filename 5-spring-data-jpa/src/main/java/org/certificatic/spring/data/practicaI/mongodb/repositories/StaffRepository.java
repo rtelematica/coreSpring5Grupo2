@@ -11,5 +11,12 @@ public interface StaffRepository
 				extends PagingAndSortingRepository<Staff, Integer> {
 	
 	// Define los metodos conforme la practica lo requiera (guiado por instructor)
+	
+	List<Staff> findByMemberLastName(String lastName);
+	
+	List<Staff> findByMemberFirstName(String lastName);
+	
+	@Query("{ 'member.firstName' : ?0 }")
+	List<Staff> findStaffByFirstPersonName(String lastName);
 
 }

@@ -104,6 +104,7 @@ public class SpringDataMongodbConfiguration {
 				Staff profWhite = staffRepository.save(createStaffWhitneyWhite()); // almacena Staff WhitneyWhite
 				Staff profBlack = staffRepository.save(createStaffJackBlack()); // almacena Staff JackBlack
 				Staff profKing = staffRepository.save(createStaffQueenKing()); // almacena Staff QueenKing
+				staffRepository.save(new Staff(12, new Person("Burger", "King")));
 
 				// Departments
 				Department humanities = departmentRepository.save(
