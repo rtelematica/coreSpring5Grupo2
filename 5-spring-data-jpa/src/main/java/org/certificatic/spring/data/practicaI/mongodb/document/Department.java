@@ -9,15 +9,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 // Define como Documento
+@Document
 @NoArgsConstructor
 public class Department {
 
 	// Define como Id
+	@Id
 	private Integer id;
 
 	private String name;
 
 	// Define DBRef
+	@DBRef
 	private Staff chair;
 
 	public Department(Integer id, String name, Staff chair) {

@@ -12,7 +12,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mapping.MappingException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ActiveProfiles;
@@ -51,20 +53,23 @@ public class SpringDataMongodbDemosTest {
 
 		// Paging and Sorting Queries
 		System.out.println("\nFind all staff members, sort alphabetically by first name and last name");		
-		Sort sortByLastName = null; // Define Sort por "member.lastName", "member.firstName" Ascendente
+		Sort sortByLastName = new Sort(Direction.ASC, "member.lastName", "member.firstName"); // Define Sort por "member.lastName", "member.firstName" Ascendente
 		
 		// Consulta todo el Staff ordenado por Sort e imprime los resultados 
+		staffRepository.findAll(sortByLastName)
+						.forEach(s -> System.out.println(s));
 
-		int total3StaffMembers = 0; // Cuenta cuantos Staff existen en el repositorio
+		int total3StaffMembers = Long.valueOf(staffRepository.count()).intValue(); // Cuenta cuantos Staff existen en el repositorio
 		String[] th = { "st", "nd", "rd", "th" };
 
-		// Implementa paginacon
+		// Implementa paginacion
 		for (int i = 0; i < Math.ceil(total3StaffMembers / 3D); i++) {
 			
 			System.out.println("\nFind " + (i + 1) + th[(i < 3) ? i : 3] + " 3 Staff members of " + total3StaffMembers
 					+ ", sort by alphabetically by last name using PageRequest");
 			
-			Page<Staff> staff = null; // consulta todos los Staff de forma paginada (tamanio de pagina de 3 elementos) y ordenalos conforme a la variable Sort "sortByLastName" definida.
+			Pageable pageable = PageRequest.of(i, 3, sortByLastName);
+			Page<Staff> staff = staffRepository.findAll(pageable); // consulta todos los Staff de forma paginada (tamanio de pagina de 3 elementos) y ordenalos conforme a la variable Sort "sortByLastName" definida.
 			
 			staff.forEach(System.out::println);
 		}

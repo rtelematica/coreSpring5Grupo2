@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 //Define como Documento
+@Document
 @NoArgsConstructor
 public class Staff {
 
 	// Define como Id
+	@Id
 	private Integer id;
 
 	private Person member;

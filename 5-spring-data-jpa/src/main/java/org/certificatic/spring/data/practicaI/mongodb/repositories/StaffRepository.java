@@ -7,7 +7,8 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 //Extiende de PagingAndSortingRepository
-public interface StaffRepository extends PagingAndSortingRepository<Staff, Integer> {
+public interface StaffRepository 
+				extends PagingAndSortingRepository<Staff, Integer> {
 	
 	// Define los metodos conforme la practica lo requiera (guiado por instructor)
 

@@ -29,6 +29,8 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 @ComponentScan(basePackages = "org.certificatic.spring.data.practicaI.mongodb")
 
 //Habilitar repositorios Spring Data MongoDB
+@EnableMongoRepositories(basePackages = 
+			"org.certificatic.spring.data.practicaI.mongodb.repositories")
 
 //Manejo transaccional unicamente funciona con MongoDB 4+
 
@@ -37,13 +39,40 @@ import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 public class SpringDataMongodbConfiguration {
 
 	// Define Bean com.mongodb.MongoClient.MongoClient utilizando EmbeddedMongoFactoryBean (cliente MongoDB en memoria)
+	@Bean
+	public MongoClient mongoDbInMemoryClient() throws IOException {
+		EmbeddedMongoFactoryBean embeddedMongo = new EmbeddedMongoFactoryBean();
+		embeddedMongo.setBindIp("localhost");
+		MongoClient mongoClient = embeddedMongo.getObject();
+		return mongoClient;
+	}
 	
 	// Opcional define Bean com.mongodb.MongoClient.MongoClient de forma tradicional en "localhost"
+	@Bean
+	@Profile("produccion")
+	public MongoClient mongoClient() throws IOException {
+		MongoClient mongoClient = new MongoClient("localhost");
+		return mongoClient;
+	}
 
 	// Define Bean MongoDbFactory utilizando la clase concreta SimpleMongoDbFactory
 	// MongoDbFactory no es necesario si se configura MongoTemplate mediante MongoClient
+	@Bean
+	public MongoDbFactory mongoDbFactory(MongoClient mongoClient) {
+		return new SimpleMongoDbFactory(mongoClient, "testdb");
+	}
 	
 	// Define Bean MongoTemplate
+	@Bean
+	@Profile("produccion")
+	public MongoTemplate mongoTemplateProd(MongoClient mongoClient) {
+		return new MongoTemplate(mongoClient, "testdb");
+	}
+	
+	@Bean
+	public MongoTemplate mongoTemplate(MongoDbFactory mongoDbFactory) {
+		return new MongoTemplate(mongoDbFactory);
+	}
 
 	// En caso de utilizar MongoDB 4+ y que el manejo transaccional esté habilitado,
 	// define Bean MongoTransactionManager
@@ -53,7 +82,8 @@ public class SpringDataMongodbConfiguration {
 	@Bean
 	@Profile("init-database")
 	@DependsOn({ "staffRepository", "departmentRepository" })
-	public ApplicationListener<ContextRefreshedEvent> startupBean(StaffRepository staffRepository,
+	public ApplicationListener<ContextRefreshedEvent> startupBean(
+			StaffRepository staffRepository,
 			DepartmentRepository departmentRepository) {
 
 		return new ApplicationListener<ContextRefreshedEvent>() {
@@ -63,22 +93,27 @@ public class SpringDataMongodbConfiguration {
 			public void onApplicationEvent(ContextRefreshedEvent event) {
 
 				// Staff
-				Staff deanJones = null; // almacena Staff JohnJones
-				Staff deanMartin = null; // almacena Staff MatthewMartin
-				Staff profBrown = null; // almacena Staff JamesBrown
-				Staff profMiller = null; // almacena Staff JudyMiller
-				Staff profDavis = null; // almacena Staff JamesDavis
-				Staff profMoore = null; // almacena Staff AllisonMoore
-				Staff profThomas = null; // almacena Staff TomThomas
-				Staff profGreen = null; // almacena Staff GrahamGreen
-				Staff profWhite = null; // almacena Staff WhitneyWhite
-				Staff profBlack = null; // almacena Staff JackBlack
-				Staff profKing = null; // almacena Staff QueenKing
+				Staff deanJones = staffRepository.save(createStaffJohnJones()); // almacena Staff JohnJones
+				Staff deanMartin = staffRepository.save(createStaffMatthewMartin()); // almacena Staff MatthewMartin
+				Staff profBrown = staffRepository.save(createStaffJamesBrown()); // almacena Staff JamesBrown
+				Staff profMiller = staffRepository.save(createStaffJudyMiller()); // almacena Staff JudyMiller
+				Staff profDavis = staffRepository.save(createStaffJamesDavis()); // almacena Staff JamesDavis
+				Staff profMoore = staffRepository.save(createStaffAllisonMoore()); // almacena Staff AllisonMoore
+				Staff profThomas = staffRepository.save(createStaffTomThomas()); // almacena Staff TomThomas
+				Staff profGreen = staffRepository.save(createStaffGrahamGreen()); // almacena Staff GrahamGreen
+				Staff profWhite = staffRepository.save(createStaffWhitneyWhite()); // almacena Staff WhitneyWhite
+				Staff profBlack = staffRepository.save(createStaffJackBlack()); // almacena Staff JackBlack
+				Staff profKing = staffRepository.save(createStaffQueenKing()); // almacena Staff QueenKing
 
 				// Departments
-				Department humanities = null; // almacena Department DepartmentHumanities con deanJones como jefe de depto
-				Department naturalSciences = null; // almacena Department DepartmentNaturalSciences con deanMartin como jefe de depto
-				Department socialSciences = null; // almacena Department DepartmentSocialSciences con deanJones como jefe de depto
+				Department humanities = departmentRepository.save(
+						createDepartmentHumanities(deanJones)); // almacena Department DepartmentHumanities con deanJones como jefe de depto
+				
+				Department naturalSciences = departmentRepository.save(
+						createDepartmentNaturalSciences(deanMartin)); // almacena Department DepartmentNaturalSciences con deanMartin como jefe de depto
+				
+				Department socialSciences = departmentRepository.save(
+						createDepartmentSocialSciences(deanJones)); // almacena Department DepartmentSocialSciences con deanJones como jefe de depto
 
 			}
 
