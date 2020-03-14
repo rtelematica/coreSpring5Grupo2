@@ -45,8 +45,12 @@ public class SpringDataJdbcDemosTest {
 				new Department("Engineering", deanCain));
 
 		// ***************Insert Departments***************
-
-		long insertedDepartments = 0L; // Inserta los Department, utiliza un Stream y cuenta cuantos fueron insertados.
+		
+		long insertedDepartments = departments.stream()
+				.peek(d -> System.out.println("department: "+ d))
+				.map(d -> departmentRepository.save(d))
+				.peek(d -> System.out.println("inserted department: "+ d))
+				.count(); // Inserta los Department, utiliza un Stream y cuenta cuantos fueron insertados.
 				
 
 		log.info("Inserted {} departments\n", insertedDepartments);
@@ -56,11 +60,13 @@ public class SpringDataJdbcDemosTest {
 
 		log.info("SQL to Fetch all Departments");
 		// busca todos los Department
+		departmentRepository.findAll().forEach(System.out::println);
 
 		System.out.println();
 
 		log.info("SQL to find By Name Humanities");
-		Optional<Department> optionalDepartment = null; // busca Department por "name" igual a "Humanities".
+		Optional<Department> optionalDepartment = departmentRepository
+				.findByName("Humanities"); // busca Department por "name" igual a "Humanities".
 
 		optionalDepartment.ifPresent(department -> {
 
@@ -76,13 +82,14 @@ public class SpringDataJdbcDemosTest {
 
 			log.info("SQL to update Humanities department. Deparment id = " + department.getId());
 			// actualiza el Departamento (update)
+			departmentRepository.save(department);
 
 			System.out.println();
+			
+			log.info("SQL to fetch Humanities department\n" +
+					departmentRepository.findByName("Humanities").get()); // busca de nuevo el Department por "name" igual a "Humanities".
 		});
-
-		log.info("SQL to fetch Humanities department\n" +
-				null); // busca de nuevo el Department por "name" igual a "Humanities".
-
+		
 		System.out.println();
 
 		log.info("jdbcSimpleMethods test ends =======================================================");

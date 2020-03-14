@@ -4,9 +4,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 // Define Tabla "DEPARTMENT"
+@Table("DEPARTMENT")
 public class Department {
 	
 	// Define Id
+	@Id
 	private Integer id;
 
 	private String name;

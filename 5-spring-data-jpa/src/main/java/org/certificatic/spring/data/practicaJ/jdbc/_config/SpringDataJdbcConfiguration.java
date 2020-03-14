@@ -31,17 +31,36 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = "org.certificatic.spring.data.practicaJ.jdbc")
 
 //Habilitar repositorios Spring Data JDBC
+@EnableJdbcRepositories(basePackages = 
+			"org.certificatic.spring.data.practicaJ.jdbc.repositories")
 
 //Opcional habilitar manejo transaccional
-
+@EnableTransactionManagement
 //Extiende de JdbcConfiguration, la clase de configuracion debe configurar otros beans de infraestructura
-public class SpringDataJdbcConfiguration {
+public class SpringDataJdbcConfiguration extends JdbcConfiguration {
 
 	// Define Bean DataSource
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+				.generateUniqueName(true)
+				.setType(EmbeddedDatabaseType.H2)
+				.addScript("db/jdbc/schema.sql")
+				.addScript("db/jdbc/data.sql")
+				.build();
+	}
 	
 	// Define Bean NamedParameterJdbcTemplate (Spring Data JDBC unicamente soprota queries con parametros nombrados, NO por posicion)
+	@Bean
+	public NamedParameterJdbcOperations operations(DataSource dataSource) {
+		return new NamedParameterJdbcTemplate(dataSource);
+	}
 	
 	// Opcional, definir Bean PlatformTransactionManager del tipo DataSourceTransactionManager
+	@Bean
+	public PlatformTransactionManager transactionManager(DataSource dataSource) {
+		return new DataSourceTransactionManager(dataSource);
+	}
 
 	@Autowired
 	private DepartmentRepository departmentRepository;

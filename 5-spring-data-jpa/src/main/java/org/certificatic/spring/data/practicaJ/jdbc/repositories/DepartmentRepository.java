@@ -8,7 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 // Extiende de CrudRepository
-public interface DepartmentRepository {
+public interface DepartmentRepository 
+							extends CrudRepository<Department, Integer> {
 
 	// Analiza metodo @Query
 	@Query("SELECT DEPARTMENT.id AS id, DEPARTMENT.name AS name, chair.department AS chair_department, chair.name AS chair_name "

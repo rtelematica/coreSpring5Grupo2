@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 // Define Tabla "CHAIR"
+@Table("CHAIR")
 @NoArgsConstructor
 public class Chair {
 
 	// Define Id
+	@Id
 	private Integer department;
 
 	private String name;
