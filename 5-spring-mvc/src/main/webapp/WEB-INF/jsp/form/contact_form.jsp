@@ -10,7 +10,7 @@
 <body>
 	<h2>Contact us</h2>
 
-	<form:form method="POST" commandName="contactForm">
+	<form:form method="POST" modelAttribute="contactForm">
 		<table>
 			<tr>
 				<td>Name:</td>

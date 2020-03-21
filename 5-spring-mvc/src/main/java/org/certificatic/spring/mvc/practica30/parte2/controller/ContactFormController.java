@@ -8,7 +8,9 @@ import org.certificatic.spring.mvc.practica30.parte2.forms.ContactForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -25,7 +27,8 @@ public class ContactFormController {
 
 	// asignar validator al comando "contactForm" a initBinder
 
-	@RequestMapping(method = RequestMethod.GET)
+	// @RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public String initForm(Model model) {
 
 		ContactForm contactForm = new ContactForm();
@@ -33,13 +36,15 @@ public class ContactFormController {
 
 		log.info("initform: {}", contactForm);
 
-		// Agregar comando "contactForm" al modelo
+		// Agregar comando/modelattribute "contactForm" al modelo
+		model.addAttribute("contactForm", contactForm);
 
 		return "form/contact_form";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	// @RequestMapping(method = RequestMethod.POST)
 	// Agregar anotacion @Valid a ContactForm para que @InitBinder valide
+	@PostMapping
 	public String submitForm(Model model, @ModelAttribute("contactForm") ContactForm form, BindingResult result) {
 
 		log.info("submited form: {}", form);
@@ -68,6 +73,7 @@ public class ContactFormController {
 	@ModelAttribute("availableCourses")
 	public List<String> availableCourses() {
 		List<String> courses = new ArrayList<String>();
+		courses.add("Spring");
 		courses.add("Java");
 		courses.add("Python");
 		courses.add("NodeJS");
@@ -81,6 +87,7 @@ public class ContactFormController {
 		List<String> tutors = new ArrayList<String>();
 		tutors.add("Mrs Smith");
 		tutors.add("Mrs Croft");
+		tutors.add("Mrs Jimenez");
 		tutors.add("Mr Wayne");
 		tutors.add("Mr Kent");
 		return tutors;
@@ -91,6 +98,7 @@ public class ContactFormController {
 		List<String> genders = new ArrayList<String>();
 		genders.add("Female");
 		genders.add("Male");
+		genders.add("Undefined");
 		return genders;
 	}
 
