@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 public class ContactFormValidationConfig {
 
 	@Bean
-	public Validator contactFormValidator() {
+	public ContactFormValidator contactFormValidator() {
 		return new ContactFormValidator();
 	}
 

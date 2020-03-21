@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 import org.certificatic.spring.mvc.practica30.parte2.forms.ContactForm;
+import org.certificatic.spring.mvc.practica30.parte2.validator.ContactFormValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +29,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ContactFormController {
 
 	// Inyectar Validator contactFormValidator;
+	@Autowired
+	private ContactFormValidator contactFormValidator;
 
 	// asignar validator al comando "contactForm" a initBinder
+	@InitBinder("contactForm")
+	protected void contactFormInitBinderConfig(WebDataBinder binder){
+		binder.setValidator(contactFormValidator);
+	}
 
 	// @RequestMapping(method = RequestMethod.GET)
 	@GetMapping
@@ -45,7 +56,8 @@ public class ContactFormController {
 	// @RequestMapping(method = RequestMethod.POST)
 	// Agregar anotacion @Valid a ContactForm para que @InitBinder valide
 	@PostMapping
-	public String submitForm(Model model, @ModelAttribute("contactForm") ContactForm form, BindingResult result) {
+	public String submitForm(Model model, 
+			@Validated @ModelAttribute("contactForm") ContactForm form, BindingResult result) {
 
 		log.info("submited form: {}", form);
 
