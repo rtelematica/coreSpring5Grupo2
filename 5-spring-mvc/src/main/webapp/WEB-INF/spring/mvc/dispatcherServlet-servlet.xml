@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- Agregar paquete practica29 y practica31 a component-scan -->
-	<context:component-scan base-package="org.certificatic.spring.mvc.practica28">
+	<context:component-scan base-package="org.certificatic.spring.mvc.practica28,org.certificatic.spring.mvc.practica29">
 		<context:exclude-filter type="regex"
 			expression="org.certificatic.spring.mvc.practica28.rootbeans.*" />
 	</context:component-scan>
@@ -16,7 +16,15 @@
 		de beans del Validador por medio de JavaConfig -->
 
 	<!-- habilitar mvc annotation-driven -->
+	<mvc:annotation-driven />
 
 	<!-- Implementar InternalResourceViewResolver -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
 </beans>

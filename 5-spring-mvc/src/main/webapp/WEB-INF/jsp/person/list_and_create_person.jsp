@@ -12,7 +12,7 @@
 	<h1>Persons</h1>
 	<h2>Register</h2>
 	<form:form action="${pageContext.request.contextPath}/person/create"
-		commandName="personForm" method="POST">
+		modelAttribute="personForm" method="POST">
 		<table>
 			<tr>
 				<td>Name:</td>
