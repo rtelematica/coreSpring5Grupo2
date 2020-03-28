@@ -8,4 +8,9 @@ import org.springframework.context.annotation.Configuration;
 public class RootContextConfiguration {
 	
 	// Define bean HardcodedUserDetailsRepository
+	@Bean
+	public HardcodedUserDetailsRepository hardcodedUserDetailsRepository() {
+		return new HardcodedUserDetailsRepository();
+	}
+	
 }

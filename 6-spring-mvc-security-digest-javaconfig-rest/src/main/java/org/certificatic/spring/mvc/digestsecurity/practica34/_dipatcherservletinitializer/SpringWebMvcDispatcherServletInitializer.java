@@ -6,12 +6,24 @@ import org.certificatic.spring.mvc.digestsecurity.practica34._configuration.Serv
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 //Extiende de AbstractAnnotationConfigDispatcherServletInitializer
-public class SpringWebMvcDispatcherServletInitializer {
+public class SpringWebMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	// Sobre escribe el metodo getRootConfigClasses
-	
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] { RootContextConfiguration.class, SecurityContextConfiguration.class };
+	}
+
 	// Sobre escribe el metodo getServletConfigClasses
-	
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[] { ServletContextConfiguration.class };
+	}
+
 	// Sobre escribe el metodo getServletMappings
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
+	}	
 
 }
