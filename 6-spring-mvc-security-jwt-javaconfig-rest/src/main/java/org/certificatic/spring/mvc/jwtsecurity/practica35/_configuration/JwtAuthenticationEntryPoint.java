@@ -17,6 +17,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 	private @Getter @Setter String realmName;
 
+	public JwtAuthenticationEntryPoint(String realmName) {
+		super();
+		this.realmName = realmName;
+	}
+
 	@Override
 	public void commence(final HttpServletRequest request, final HttpServletResponse response,
 			final AuthenticationException authException) throws IOException, ServletException {
@@ -28,4 +33,5 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		writer.println("HTTP Status 401 : " + authException.getMessage());
 
 	}
+	
 }

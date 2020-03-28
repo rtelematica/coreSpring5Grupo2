@@ -52,7 +52,7 @@ public class JwtAuthroizationFilter extends GenericFilterBean {
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
 		String jwt = request.getHeader("Authorization");
 		
-		if(jwt==null)
+		if(jwt == null)
 			return null;
 		
 		if (!jwt.isEmpty() && jwt.startsWith("Bearer")) {
@@ -75,20 +75,25 @@ public class JwtAuthroizationFilter extends GenericFilterBean {
 												.collect(Collectors.toList());
 			} catch (ExpiredJwtException exception) {
 				log.warn("Request to parse expired JWT : {} failed : {}", jwt, exception.getMessage());
+				
 			} catch (UnsupportedJwtException exception) {
 				log.warn("Request to parse unsupported JWT : {} failed : {}", jwt, exception.getMessage());
+				
 			} catch (MalformedJwtException exception) {
 				log.warn("Request to parse invalid JWT : {} failed : {}", jwt, exception.getMessage());
+				
 			} catch (SignatureException exception) {
 				log.warn("Request to parse JWT with invalid signature : {} failed : {}", jwt, exception.getMessage());
+				
 			} catch (IllegalArgumentException exception) {
 				log.warn("Request to parse empty or null JWT : {} failed : {}", jwt, exception.getMessage());
 			}
 			
-			if (!claims.getSubject().isEmpty()) {
-				return new UsernamePasswordAuthenticationToken(
-											createUserWithoutCredentials(claims.getSubject(), authorities), null, authorities);
-			}
+			if(claims != null)
+				if (!claims.getSubject().isEmpty()) {
+					return new UsernamePasswordAuthenticationToken(
+												createUserWithoutCredentials(claims.getSubject(), authorities), null, authorities);
+				}
 		} 
 
 		return null;

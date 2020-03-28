@@ -84,5 +84,5 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		writer.write(JwtUtils.jwtResponse(jwt));
 		writer.flush();
 	}
-
+	
 }
