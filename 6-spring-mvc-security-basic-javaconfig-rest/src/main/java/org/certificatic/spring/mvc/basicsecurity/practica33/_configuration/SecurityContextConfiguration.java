@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
@@ -75,9 +76,13 @@ public class SecurityContextConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin*/**").hasAuthority("ROLE_ADMIN") // .hasRole("ADMIN")
 				.antMatchers("/user*/**").hasAuthority("ROLE_USER") // .hasRole("USER")
 			.and()
-				.httpBasic().realmName(REALM_NAME)
+				.httpBasic()
+					//.realmName(REALM_NAME)
+					.authenticationEntryPoint(customAuthenticationEntryPoint())
 			.and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+				.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
 		
 	}
 
@@ -89,11 +94,17 @@ public class SecurityContextConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.OPTIONS, "/**");
 	}
 
-	
-
 	// Define Bean AccessDeniedHandler
+	@Bean
+	public CustomAccessDeniedHandler customAccessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 
 	// Define Bean BasicAuthenticationEntryPoint
+	@Bean
+	public CustomBasicAuthenticationEntryPoint customAuthenticationEntryPoint() {
+		return new CustomBasicAuthenticationEntryPoint(REALM_NAME);
+	}
 
 	
 }
