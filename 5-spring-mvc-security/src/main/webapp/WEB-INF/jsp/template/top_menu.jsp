@@ -14,6 +14,7 @@
 
 
 		<!-- permitir visualización si el usuario está autenticado -->
+		<security:authorize access="isAuthenticated()">
 
 			<li><a href="${site_url}welcome" data-seccion="welcome">Welcome</a></li>
 	
@@ -29,6 +30,7 @@
 			<li><a href="#" data-href-url="${site_url}logout"
 				data-seccion="logout">Logout</a></li>
 
+		</security:authorize>
 		<!--  -->
 
 	</ul>

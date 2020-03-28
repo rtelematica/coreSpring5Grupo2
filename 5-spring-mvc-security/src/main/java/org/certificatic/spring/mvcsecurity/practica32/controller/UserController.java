@@ -28,7 +28,7 @@ public class UserController {
 	@Qualifier("user-data-service")
 	private IDataService userDataService;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET) // /userSection?callmethod=xxx
 	public String showUserPage(Model model, @RequestParam(value = "callmethod", required = false) String callmethod) {
 
 		log.info("show user page ------------------");
@@ -37,13 +37,18 @@ public class UserController {
 
 			String data = null;
 
+			// callmethod == "root"
+			
 			log.info("callmethod: {}", callmethod);
+			
 			if (callmethod.equals("admin"))
-				data = adminDataService.getData();
+				data = adminDataService.getData(); // admin DATA ...
+			
 			else if (callmethod.equals("root"))
-				data = rootDataService.getData();
+				data = rootDataService.getData(); // root DATA ...
+			
 			else if (callmethod.equals("user"))
-				data = userDataService.getData();
+				data = userDataService.getData(); // user DATA ...
 
 			log.info("data: {}", data);
 

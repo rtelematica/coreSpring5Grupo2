@@ -38,10 +38,13 @@ public class RootController {
 			String data = null;
 
 			log.info("callmethod: {}", callmethod);
+			
 			if (callmethod.equals("admin"))
 				data = adminDataService.getData();
+			
 			else if (callmethod.equals("root"))
 				data = rootDataService.getData();
+			
 			else if (callmethod.equals("user"))
 				data = userDataService.getData();
 
