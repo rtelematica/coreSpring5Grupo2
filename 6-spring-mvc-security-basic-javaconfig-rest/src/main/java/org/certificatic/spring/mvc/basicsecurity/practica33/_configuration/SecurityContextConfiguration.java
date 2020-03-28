@@ -22,19 +22,78 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 @Configuration
 
 // Habilita configuracion web con Spring Security
+@EnableWebSecurity
 
 // Extiende de WebSecurityConfigurerAdapter
-public class SecurityContextConfiguration {
-	
+public class SecurityContextConfiguration extends WebSecurityConfigurerAdapter {
+
 	public static final String REALM_NAME = "Mi application realm";
 
 	// Sobre escribe el metodo configure(AuthenticationManagerBuilder auth)
-	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		auth.inMemoryAuthentication()
+				.withUser("admin").password("admin").roles("ADMIN")
+				.and()
+				.withUser("xvanhalenx").password("123123").roles("ROOT", "ADMIN")
+				.and()
+				.withUser("user").password("user").roles("USER");
+		
+		// auth.userDetailsService(customUserDetailsService());
+
+	}
+
+	// @Bean
+	public UserDetailsService customUserDetailsService() {
+		return (String username) -> {
+			
+			if(username == "admin")
+				return new User("admin", "admin", Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+			
+			if(username == "xvanhalenx")
+				return new User("xvanhalenx", "123123", Arrays.asList(new SimpleGrantedAuthority("ROLE_ROOT"), 
+																	  new SimpleGrantedAuthority("ROLE_ADMIN")));
+			
+			if(username == "user")
+				return new User("user", "user", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+			
+			return null;
+		};
+	}
+
 	// Sobre escribe el metodo configure(HttpSecurity http)
-	
-	// Define Bean AccessDeniedHandler
-	
-	// Define Bean BasicAuthenticationEntryPoint
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+		http
+			.csrf().disable()
+			.authorizeRequests()
+				.antMatchers("/welcome").authenticated()
+				.antMatchers("/").permitAll()
+				.antMatchers("/root*/**").hasAuthority("ROLE_ROOT") // .hasRole("ROOT")
+				.antMatchers("/admin*/**").hasAuthority("ROLE_ADMIN") // .hasRole("ADMIN")
+				.antMatchers("/user*/**").hasAuthority("ROLE_USER") // .hasRole("USER")
+			.and()
+				.httpBasic().realmName(REALM_NAME)
+			.and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
+	}
 
 	// Sobre escribe el metodo configure(WebSecurity web)
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web
+			.ignoring()
+				.antMatchers(HttpMethod.OPTIONS, "/**");
+	}
+
+	
+
+	// Define Bean AccessDeniedHandler
+
+	// Define Bean BasicAuthenticationEntryPoint
+
+	
 }
